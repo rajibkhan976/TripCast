@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import LogInComponent from './Components/LogInComponent';
+import HomeScreen from './Screens/HomeScreen';
+
 
 class App extends Component {
   render() {
     return (
-      <LogInComponent/>
+      <div>
+        <HomeScreen/>
+        <LogInComponent/>
+      </div>
     );
   }
 }
