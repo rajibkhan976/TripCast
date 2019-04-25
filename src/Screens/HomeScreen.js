@@ -15,9 +15,9 @@ export class HomeScreen extends Component {
     const city = e.target.elements.city.value
     console.log(city)
     console.log(country)
-    const API_KEY = '55f970a5b61819d7f237eb1cb2be6bfd';
+    const apiKey = '55f970a5b61819d7f237eb1cb2be6bfd';
     fetch(
-      `http://api.openweathermap.org/data/2.5/weather?q=växjö,sweden&APPID=${API_KEY}&units=metric`
+      `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&APPID=${apiKey}&units=metric`
     )
       .then(res => res.json())
       .then(data => {
