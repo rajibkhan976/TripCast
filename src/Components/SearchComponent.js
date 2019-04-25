@@ -15,17 +15,29 @@ const SearchComponent = (props) => (
     
      </InputGroup.Prepend>
      <FormControl
+<<<<<<< HEAD
        name='country'
+=======
+     name='country'
+>>>>>>> 28c4fd194e6db63466fc0ac602a10ec0edfa9129
        aria-label="Default"
        aria-describedby="inputGroup-sizing-default"
      />
      <InputGroup.Prepend>
+<<<<<<< HEAD
        <InputGroup.Text id="inputGroup-sizing-default"  
+=======
+       <InputGroup.Text id="inputGroup-sizing-default" 
+>>>>>>> 28c4fd194e6db63466fc0ac602a10ec0edfa9129
         type="text">City</InputGroup.Text>
     
      </InputGroup.Prepend>
      <FormControl
+<<<<<<< HEAD
        name='city'
+=======
+     name='city'
+>>>>>>> 28c4fd194e6db63466fc0ac602a10ec0edfa9129
        aria-label="Default"
        aria-describedby="inputGroup-sizing-default"
      />
