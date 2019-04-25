@@ -72,8 +72,8 @@ class WeatherDisplayComponent extends Component {
                             <h2>Clear Skys</h2>
                         </div>
                         <div className={styles.todayTemp}>
-                            <h1>20° C</h1>
-                            <h3>12° C</h3>
+                            <h1>{this.props.temperature}</h1>
+                            <h3>{this.props.tempMin}</h3>
                             <Button onClick={this.toggleDetails} size='sm' variant='info'>Details</Button>
                         </div>
                     </div>
