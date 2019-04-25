@@ -15,15 +15,17 @@ const SearchComponent = (props) => (
     
      </InputGroup.Prepend>
      <FormControl
+     name='country'
        aria-label="Default"
        aria-describedby="inputGroup-sizing-default"
      />
      <InputGroup.Prepend>
-       <InputGroup.Text id="inputGroup-sizing-default" name='city' 
+       <InputGroup.Text id="inputGroup-sizing-default" 
         type="text">City</InputGroup.Text>
     
      </InputGroup.Prepend>
      <FormControl
+     name='city'
        aria-label="Default"
        aria-describedby="inputGroup-sizing-default"
      />
