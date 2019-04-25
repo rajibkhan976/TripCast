@@ -106,7 +106,7 @@ class LogInComponent extends Component {
         <Button variant="primary" onClick={this.handleShow}>Trip Planner</Button>
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Title>Signup/Login</Modal.Title>
           </Modal.Header>
           <Modal.Body>
           <Form>
