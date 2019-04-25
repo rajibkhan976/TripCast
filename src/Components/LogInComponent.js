@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
 
 class LogInComponent extends Component {
 
@@ -8,6 +11,7 @@ class LogInComponent extends Component {
     this.state = {users: [
       {email: 'admin@gmail.com', password: 'admin'}
     ],
+      show: false,
       loginStatus: false,
       signupStatus: true
     };
@@ -88,44 +92,47 @@ class LogInComponent extends Component {
     }
   }
 
+  handleClose = (e) => {
+    this.setState({ show: false });
+  }
+
+  handleShow = (e) => {
+    this.setState({ show: true });
+  }
+
   render () {
     return (
-      <div>
-        <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-          Trip planner
-        </button>
-        <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">Signup/Login</h5>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-              <div className="form-group">
-                <label>Email: </label>
-                <input className="form-control" type="email" id="email" onChange= {this.handleEmailInput}/> <br/>
-                <label>Password: </label>
-                <input className="form-control" type="password" id="pass" onChange= {this.handlePasswordInput}/> <br/>
-                {(this.state.loginStatus) ?
-                  null :
-                  <button type="button" className="btn btn-success" onClick= {this.Login}>Login</button>
-                  }
-                {(!this.state.signupStatus && this.state.loginStatus) ?
-                  <button type="button" className="btn btn-warning" onClick= {this.Signup}>Sign up</button> :
-                  null
-                  }
-              </div>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <>
+        <Button variant="primary" onClick={this.handleShow}>Trip Planner</Button>
+        <Modal show={this.state.show} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+          <Form>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control type="email" placeholder="Enter email" onChange= {this.handleEmailInput} />
+            </Form.Group>
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password" placeholder="Password" onChange= {this.handlePasswordInput} />
+            </Form.Group>
+            {(this.state.loginStatus) ?
+              null :
+              <Button variant="primary" type="submit" onClick= {this.Login} >Login</Button>
+            }
+            {(!this.state.signupStatus && this.state.loginStatus) ?
+              <Button variant="primary" type="submit" onClick= {this.Signup}>Signup</Button> :
+              null
+            }
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.handleClose}>Close</Button>
+          </Modal.Footer>
+        </Modal>
+      </>
     );
   }
 }
