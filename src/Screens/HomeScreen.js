@@ -29,25 +29,12 @@ export class HomeScreen extends Component {
       .catch(error => console.error(error));
   };
 
-  handleChangeCountry = (e) => {
-    this.setState({ country: e.target.value });
-  };
-
-  handleChangeCity = (e) => {
-    this.setState({ city: e.target.value });
-  };
-
-  consoleLog = () => {
-    
-    
-  }
 
   render() {
     return (
       <div className='container' style={{display: 'flex'}}>
           <WeatherDisplayComponent></WeatherDisplayComponent>
           <SearchComponent fetchWeather={this.fetchWeather}/>
-        <button onClick={this.consoleLog}>Click</button>
       </div>
     );
   }
