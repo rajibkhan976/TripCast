@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table'
-import styles from './WeatherDisplay.module.css'
+import styles from '../CSS/WeatherDisplay.module.css'
 
 import ClearSkyDay from '../Images/ClearSkyDay.svg';
 import ClearSkyNight from '../Images/ClearSkyNight.svg';
