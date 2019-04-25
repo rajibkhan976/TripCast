@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import  SearchComponent  from '../Components/SearchComponent';
 import WeatherDisplayComponent from '../Components/WeatherDisplayComponent';
+import styles from '../Components/CSS/home.module.css'
 
 
 export class HomeScreen extends Component {
@@ -43,11 +44,10 @@ export class HomeScreen extends Component {
   }
 
   render() {
-    return (
-      <div className='container' style={{display: 'flex'}}>
-          <WeatherDisplayComponent></WeatherDisplayComponent>
+    return ( 
+      <div className={styles.home}>
           <SearchComponent fetchWeather={this.fetchWeather}/>
-        <button onClick={this.consoleLog}>Click</button>
+          <WeatherDisplayComponent/>
       </div>
     );
   }

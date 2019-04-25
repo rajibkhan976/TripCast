@@ -44,9 +44,5 @@ const SearchComponent = (props) => (
   export default SearchComponent;
   
 
-//   <form onSubmit={props.fetchWeather}>
-// <input type="text" name="city" placeholder="City..."/>
-// <input type="text" name="country" placeholder="Country..."/>
-// <button>Get Weather</button>
-// </form>
+
 
