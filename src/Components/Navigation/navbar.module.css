@@ -1,8 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Pacifico');
 @import url('https://fonts.googleapis.com/css?family=Quicksand');
 
-.what {
-    /* height:170px; */
+.navigationContainer {
     margin:0;
     padding:0;
     background-color: #4596CC;
@@ -21,7 +20,7 @@
     font-size: 60px;
 }
 
-.list {
+.navLinks {
     padding:5px;
     margin:10px;
     text-decoration: none;
