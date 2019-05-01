@@ -1,26 +1,30 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
+import NavBarComponent from './Components/Navigation/NavBarComponent';
+import HomeScreen from './Screens/HomeScreen';
+import AboutScreen from './Screens/AboutScreen';
+import MyPageScreen from './Screens/MyPageScreen';
+import RecentScreen from './Screens/RecentScreen';
+import TripPlannerScreen from './Screens/TripPlannerScreen';
+
 import './App.css';
 
 class App extends Component {
   render() {
     return (
+      <Router>
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <NavBarComponent/>
       </div>
+
+        <Route exact path="/" component={ HomeScreen } />
+        <Route exact path="/home" component={ HomeScreen } />
+        <Route exact path="/about" component={ AboutScreen } />
+        <Route exact path="/mypage" component={ MyPageScreen } />
+        <Route exact path="/recent" component={ RecentScreen } />
+        <Route exact path="/planner" component={ TripPlannerScreen } />
+      </Router>
     );
   }
 }

@@ -1,9 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: 'Open Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -11,4 +12,24 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+h1 {
+  font-size: 32px;
+  color: #4596CC;
+  font-family: 'Quicksand';
+}
+
+h2 {
+  font-size: 26px;
+  color: #3D83B3;
+  font-family: 'Quicksand';
+}
+
+h3 {
+  font-family: 'Quicksand';
+}
+
+p {
+  font-size: 16px;
 }
