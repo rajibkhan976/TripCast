@@ -52,7 +52,7 @@ export class HomeScreen extends Component {
         for (var i = 0; i < list.length; i++) { 
           if (list[i].dt_txt.includes('12:00:00')) {
             dateList.push(list[i]);
-            console.log('loop log', list[i]);
+            
           }
         }
 
