@@ -80,7 +80,7 @@ class WeatherDisplayComponent extends Component {
                     <hr/>
                     <div className={styles.underLine}>
                         {this.state.showDetails === true 
-                            ?  <Table style={{width: '600px'}} striped bordered>
+                            ?  <Table style={{width: '100%'}} striped bordered>
                                     <tbody>
                                         <tr>
                                             <td>test</td>

@@ -8,10 +8,9 @@ import HomeScreen from './Screens/HomeScreen';
 class App extends Component {
   render() {
     return (
-      <div>
-        <LogInComponent/>
-        <TripPlannerComponent/>
+      <div className="App">
         <HomeScreen/>
+        <TripPlannerComponent/>
       </div>
     );
   }
