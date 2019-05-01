@@ -38,6 +38,7 @@ export class HomeScreen extends Component {
     this.fetchForecast(city, country, apiKey);
   };
 
+  //I take in three arguments from the function above this and uses those to fetch the forecast
   fetchForecast = (city, country, apiKey) => {
     fetch(
       `http://api.openweathermap.org/data/2.5/forecast?q=${city},${country}&APPID=${apiKey}&units=metric`
@@ -47,7 +48,8 @@ export class HomeScreen extends Component {
         let list = data.list;
         let dateList = [];
         console.log('this is list', list);
-        for (var i = 0; i < list.length; i++) {
+        //Here I do a loop to get the weather everyday at 12:00
+        for (var i = 0; i < list.length; i++) { 
           if (list[i].dt_txt.includes('12:00:00')) {
             dateList.push(list[i]);
             console.log('loop log', list[i]);
