@@ -69,7 +69,7 @@ export class HomeScreen extends Component {
     return (
       <div>
         <div className={styles.home}>
-          <SearchComponent fetchWeather={this.fetchWeather} />
+          <SearchComponent fetchWeather={this.fetchWeather}/>
           <WeatherDisplayComponent
             data={this.state.data}
             fdata={this.state.fdata}
