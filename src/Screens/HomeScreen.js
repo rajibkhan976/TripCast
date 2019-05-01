@@ -1,24 +1,16 @@
 import React, { Component } from 'react';
 import SearchComponent from '../Components/SearchComponent';
 import WeatherDisplayComponent from '../Components/WeatherDisplayComponent';
-import styles from '../Components/CSS/home.module.css'
+import styles from '../Components/CSS/home.module.css';
 import LogInComponent from '../Components/LogInComponent';
-
 
 export class HomeScreen extends Component {
   constructor() {
     super();
     this.state = {
-    //   temperature: '', //This is the temperature
-    //   humidity: '', //This is the humidity
-    //   tempMin: '', //This is the minimal temperature
-    //   tempMax: '', //This is the maximal temperature
-    //   icon: '', //This is the icon code
-    //   description: '', //This is the description for the weather
-    //   country: '', //This is the country the user typed in
-    //   city: '' //This is the city the user typed in
-      data : {}
-  };
+      data: {},
+      fdata: {},
+    };
   }
 
   //This is a function to fetch the weather from the API
@@ -35,44 +27,56 @@ export class HomeScreen extends Component {
       .then(res => res.json())
       .then(data => {
         console.log(data);
+
         if (city && country) {
-          this.setState({         //Here we set the state to selected results form API
-            // temperature: data.main.temp,
-            // humidity: data.main.humidity,
-            // tempMin: data.main.temp_min,
-            // tempMax: data.main.temp_max,
-            // icon: data.weather[0].icon,
-            // description: data.weather[0].description,
-            // country: data.sys.country,
-            // city: data.name
-            data : data
+          this.setState({
+            data: data
           });
         }
-        console.log('state.temp:', this.state.temperature);
-        console.log('state.hum:', this.state.humidity);
+      })
+      .catch(error => console.error(error));
+    this.fetchForecast(city, country, apiKey);
+  };
+
+  fetchForecast = (city, country, apiKey) => {
+    fetch(
+      `http://api.openweathermap.org/data/2.5/forecast?q=${city},${country}&APPID=${apiKey}&units=metric`
+    )
+      .then(res => res.json())
+      .then(data => {
+        let list = data.list;
+        let dateList = [];
+        console.log('this is list', list);
+        for (var i = 0; i < list.length; i++) {
+          if (list[i].dt_txt.includes('12:00:00')) {
+            dateList.push(list[i]);
+            console.log('loop log', list[i]);
+          }
+        }
+
+        this.setState({
+          fdata: dateList
+        });
+        console.log('date.list', dateList);
       })
       .catch(error => console.error(error));
   };
 
   render() {
-    console.log(this.state);
+    console.log('state fdata', this.state.fdata)
     return (
       <div>
-      <div className={styles.home}>
-        <SearchComponent fetchWeather={this.fetchWeather} />
-        <WeatherDisplayComponent
-          // temperature={this.state.temperature}
-          // humidiy={this.state.humidity}
-          // tempMin={this.state.tempMin}
-          // tempMax={this.state.icon}
-          // icon={this.state.icon}
-          // description={this.state.description}
-          // country={this.state.country}
-          // city={this.state.city}
-          data = {this.state.data}
-        />
+        <div className={styles.home}>
+          <SearchComponent fetchWeather={this.fetchWeather} />
+          <WeatherDisplayComponent
+            data={this.state.data}
+            fdata={this.state.fdata}
+          />
+        </div>
+        <div>
+          <LogInComponent />
+        </div>
       </div>
-    </div>
     );
   }
 }
