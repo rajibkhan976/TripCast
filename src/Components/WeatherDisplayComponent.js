@@ -30,15 +30,6 @@ class WeatherDisplayComponent extends Component {
         });
     };
 
-    testObject = {
-        "weather":[{
-            "id":803,
-            "main": "Clouds",
-            "description":"broken clouds",
-            "icon":"04d"}]
-    };
-    
-
     handleImages = {
        '01d': ClearSkyDay,
        '01n': ClearSkyNight,
@@ -62,62 +53,100 @@ class WeatherDisplayComponent extends Component {
 
 
     render() {
+        
+        let main = this.props.data.main
+        let weather = this.props.data.weather
+        let sys = this.props.data.sys
+        let sunrise = ""
+        let sunset = ""
+        if (sys) {
+            sunrise = (new Date(sys.sunrise*1000).getHours() +":"+ new Date(sys.sunrise*1000).getMinutes());
+            sunset = (new Date(sys.sunset*1000).getHours() +":"+ new Date(sys.sunset*1000).getMinutes());
+        }
+        console.log(sunrise);
+        
+        
+
         return (
-            <Card>
-                <Card.Body>
-                    <h1>Location</h1>
-                    <div className={styles.today}>
-                        <div>
-                            <img src={this.handleImages[this.testObject['weather'][0].icon]} alt='Clear Skys'className={styles.todayImage}/>
-                            <h2>Clear Skys</h2>
-                        </div>
-                        <div className={styles.todayTemp}>
-                            <h1>20° C</h1>
-                            <h3>12° C</h3>
-                            <Button onClick={this.toggleDetails} size='sm' variant='info'>Details</Button>
-                        </div>
-                    </div>
-                    <hr/>
-                    <div className={styles.underLine}>
-                        {this.state.showDetails === true 
-                            ?  <Table style={{width: '100%'}} striped bordered>
-                                    <tbody>
-                                        <tr>
-                                            <td>test</td>
-                                            <td>test</td>
-                                        </tr>
-                                        <tr>
-                                            <td>test</td>
-                                            <td>test</td>
-                                        </tr>
-                                    </tbody>
-                                </Table>
-                            :   <div className={styles.forcastContainer}>
-                                    <div className={styles.forcastDay}>
-                                        <img src={this.handleImages['10d']} alt='Clear Skys' className={styles.forcastImage}/>
-                                        <h3>20°C</h3>
-                                        <p>12°C</p>
-                                    </div>
-                                    <div className={styles.forcastDay}> 
-                                        <img src={this.handleImages['50d']} alt='Clear Skys' className={styles.forcastImage}/>
-                                        <h3>20°C</h3>
-                                        <p>12°C</p>
-                                    </div>
-                                    <div className={styles.forcastDay}> 
-                                        <img src={this.handleImages['02d']} alt='Clear Skys' className={styles.forcastImage}/>
-                                        <h3>20°C</h3>
-                                        <p>12°C</p>
-                                    </div>
-                                    <div className={styles.forcastDay}>
-                                        <img src={this.handleImages['01d']} alt='Clear Skys' className={styles.forcastImage}/>
-                                        <h3>20°C</h3>
-                                        <p>12°C</p>
-                                    </div>
+            <div>
+              {this.props.data.name  
+                ? <Card>
+                        <Card.Body>
+                            <h1>Location</h1>
+                            <div className={styles.today}>
+                                <div>
+                                    <img src={this.handleImages[weather[0].icon]} alt='Clear Skys'className={styles.todayImage}/>
+                                    <h2>{weather[0].discription}</h2>
                                 </div>
-                        }
-                    </div>
-                </Card.Body>
-            </Card>
+                                <div className={styles.todayTemp}>
+                                    <h1>{Math.round(main.temp)}</h1>
+                                    <h4>{Math.round(main.temp_min)}  {Math.round(main.temp_max)}</h4>
+                                    <Button onClick={this.toggleDetails} size='sm' variant='info'>Details</Button>
+                                </div>
+                            </div>
+                            <hr/>
+                            <div className={styles.underLine}>
+                                {this.state.showDetails === true 
+                                    ?  <Table style={{width: '100%'}} striped bordered>
+                                            <tbody>
+                                               <tr>
+                                                   <td>High Temperature</td>
+                                                   <td>{main.temp_max}</td>
+                                               </tr>
+                                               <tr>
+                                                   <td>Low Temperature</td>
+                                                   <td>{main.temp_min}</td>
+                                               </tr>
+                                               <tr>
+                                                   <td>Humidity</td>
+                                                   <td>{main.humidity}</td>
+                                               </tr>
+                                               <tr>
+                                                   <td>Sunrise</td>
+                                                   <td>{sunrise}</td>
+                                               </tr>
+                                               <tr>
+                                                   <td>Sunset</td>
+                                                   <td>{sunset}</td>
+                                               </tr>
+                                               <tr>
+                                                   <td>Pressure</td>
+                                                   <td>{main.pressure}</td>
+                                               </tr>
+                                               <tr>
+                                                   <td>Wind Speed (m/s)</td>
+                                                   <td>{this.props.data.wind.speed}</td>
+                                               </tr>
+                                            </tbody>
+                                        </Table>
+                                    :   <div className={styles.forcastContainer}>
+                                            <div className={styles.forcastDay}>
+                                                <img src={this.handleImages['10d']} alt='Clear Skys' className={styles.forcastImage}/>
+                                                <h3>20°C</h3>
+                                                <p>12°C</p>
+                                            </div>
+                                            <div className={styles.forcastDay}> 
+                                                <img src={this.handleImages['50d']} alt='Clear Skys' className={styles.forcastImage}/>
+                                                <h3>20°C</h3>
+                                                <p>12°C</p>
+                                            </div>
+                                            <div className={styles.forcastDay}> 
+                                                <img src={this.handleImages['02d']} alt='Clear Skys' className={styles.forcastImage}/>
+                                                <h3>20°C</h3>
+                                                <p>12°C</p>
+                                            </div>
+                                            <div className={styles.forcastDay}>
+                                                <img src={this.handleImages['01d']} alt='Clear Skys' className={styles.forcastImage}/>
+                                                <h3>20°C</h3>
+                                                <p>12°C</p>
+                                            </div>
+                                        </div>
+                                }
+                            </div>
+                        </Card.Body>
+                    </Card>
+                : null}
+            </div>
         );
     }
 }

@@ -9,15 +9,16 @@ export class HomeScreen extends Component {
   constructor() {
     super();
     this.state = {
-      temperature: '', //This is the temperature
-      humidity: '', //This is the humidity
-      tempMin: '', //This is the minimal temperature
-      tempMax: '', //This is the maximal temperature
-      icon: '', //This is the icon code
-      description: '', //This is the description for the weather
-      country: '', //This is the country the user typed in
-      city: '' //This is the city the user typed in
-    };
+    //   temperature: '', //This is the temperature
+    //   humidity: '', //This is the humidity
+    //   tempMin: '', //This is the minimal temperature
+    //   tempMax: '', //This is the maximal temperature
+    //   icon: '', //This is the icon code
+    //   description: '', //This is the description for the weather
+    //   country: '', //This is the country the user typed in
+    //   city: '' //This is the city the user typed in
+      data : {}
+  };
   }
 
   //This is a function to fetch the weather from the API
@@ -36,14 +37,15 @@ export class HomeScreen extends Component {
         console.log(data);
         if (city && country) {
           this.setState({         //Here we set the state to selected results form API
-            temperature: data.main.temp,
-            humidity: data.main.humidity,
-            tempMin: data.main.temp_min,
-            tempMax: data.main.temp_max,
-            icon: data.weather[0].icon,
-            description: data.weather[0].description,
-            country: data.sys.country,
-            city: data.name
+            // temperature: data.main.temp,
+            // humidity: data.main.humidity,
+            // tempMin: data.main.temp_min,
+            // tempMax: data.main.temp_max,
+            // icon: data.weather[0].icon,
+            // description: data.weather[0].description,
+            // country: data.sys.country,
+            // city: data.name
+            data : data
           });
         }
         console.log('state.temp:', this.state.temperature);
@@ -59,18 +61,16 @@ export class HomeScreen extends Component {
       <div className={styles.home}>
         <SearchComponent fetchWeather={this.fetchWeather} />
         <WeatherDisplayComponent
-          temperature={this.state.temperature}
-          humidiy={this.state.humidity}
-          tempMin={this.state.tempMin}
-          tempMax={this.state.icon}
-          icon={this.state.icon}
-          description={this.state.description}
-          country={this.state.country}
-          city={this.state.city}
+          // temperature={this.state.temperature}
+          // humidiy={this.state.humidity}
+          // tempMin={this.state.tempMin}
+          // tempMax={this.state.icon}
+          // icon={this.state.icon}
+          // description={this.state.description}
+          // country={this.state.country}
+          // city={this.state.city}
+          data = {this.state.data}
         />
-      </div>
-      <div>
-        <LogInComponent/>
       </div>
     </div>
     );
