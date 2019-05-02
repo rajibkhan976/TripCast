@@ -278,7 +278,7 @@ class WeatherDisplayComponent extends Component {
         'ZM' : 'Zambia',
         'ZW' : 'Zimbabwe'
     };
-    
+    git
 
     handleImages = {
        '01d': ClearSkyDay,
