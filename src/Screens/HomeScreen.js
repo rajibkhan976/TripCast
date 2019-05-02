@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import SearchComponent from '../Components/SearchComponent';
 import WeatherDisplayComponent from '../Components/WeatherDisplayComponent';
 import styles from '../Components/CSS/home.module.css';
-import LogInComponent from '../Components/LogInComponent';
 
 export class HomeScreen extends Component {
   constructor() {
@@ -74,9 +73,6 @@ export class HomeScreen extends Component {
             data={this.state.data}
             fdata={this.state.fdata}
           />
-        </div>
-        <div>
-          <LogInComponent />
         </div>
       </div>
     );
