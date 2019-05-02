@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import SearchComponent from '../Components/SearchComponent';
 import WeatherDisplayComponent from '../Components/WeatherDisplayComponent';
 import styles from '../Components/CSS/home.module.css';
-import LogInComponent from '../Components/LogInComponent';
-//Todo, weather converter, imperial, fahrenheit, kelvin
-//TODO, Wrong input
+
 
 export class HomeScreen extends Component {
   constructor() {
@@ -42,8 +40,7 @@ export class HomeScreen extends Component {
     )
       .then(res => res.json())
       .then(data => {
-        console.log(data);
-
+      
         if (city && country) {
           this.setState({
             data: data
@@ -64,28 +61,37 @@ export class HomeScreen extends Component {
       .then(data => {
         let list = data.list;
         let dateList = [];
-        console.log('this is list', list);
         //Here I do a loop to get the weather everyday at 12:00
         for (var i = 0; i < list.length; i++) {
           if (list[i].dt_txt.includes('12:00:00')) {
             dateList.push(list[i]);
           }
         }
-
+        //Here I set error to false, because I dont want to render an error
         this.setState({
-          fdata: dateList
+          fdata: dateList,
+          error: false
         });
-        console.log('date.list', dateList);
+        
       })
-      .catch(error => alert('City not found', error));
+      //Here I catch the error and assing it to true in state so I can rende error message
+      .catch(error => {
+      return(
+      this.error = <h3 style={{color: 'darkred'}}>Please enter valid search.</h3>,
+      this.setState({
+        error: true
+      })
+    )
+    });
   };
 
   render() {
-    console.log('state unit', this.state.unit);
+    
     return (
       <div>
         <div className={styles.home}>
-          <SearchComponent fetchWeather={this.fetchWeather} />
+          <SearchComponent fetchWeather={this.fetchWeather}/>
+          {this.state.error === true ? this.error : null}
           <WeatherDisplayComponent
             data={this.state.data}
             fdata={this.state.fdata}
