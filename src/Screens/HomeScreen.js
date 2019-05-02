@@ -24,7 +24,6 @@ export class HomeScreen extends Component {
     const country = e.target.elements.country.value; //Stores the country value from SearchComponent
     const city = e.target.elements.city.value; //Stores the city value from SearchComponent
     const apiKey = '55f970a5b61819d7f237eb1cb2be6bfd'; //This is the API key to OpenWeather
-    console.log('this is options', e.target.elements.options.value)
     let unit = ''
     if (e.target.elements.options.value === 'celsius') {
       unit = 'metric'
