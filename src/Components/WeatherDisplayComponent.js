@@ -369,118 +369,76 @@ class WeatherDisplayComponent extends Component {
                                 <div className={styles.buttons}> 
                                     <LogInComponent/>
                                 </div>
-                        </div>
-                        <hr/>
-                        <div className={styles.underLine}>
-                            {this.state.showDetails === true 
-                                ? <Table style={{width: '100%'}} striped bordered>
-                                    <tbody>
-                                        <tr>
-                                            <td>High Temperature</td>
-                                            <td>{main.temp_max}{this.props.unit === 'metric' 
-                                                ? '°C'
-                                                : '°F'}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Low Temperature</td>
-                                            <td>{Math.round(main.temp_min)}{this.props.unit === 'metric' 
-                                                ? '°C'
-                                                : '°F'}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Humidity</td>
-                                            <td>{main.humidity}%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Sunrise</td>
-                                            <td>{sunrise.length < 5 
-                                                ? '0'+ sunrise
-                                                : sunrise}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Sunset</td>
-                                            <td>{sunset.length < 5 
-                                                ? '0'+ sunset
-                                                : sunset}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Pressure</td>
-                                            <td>{main.pressure} hPa</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Wind Speed</td>
-                                            <td>{this.props.data.wind.speed}{this.props.unit == 'metric' 
-                                                ? ' m/s' 
-                                                : ' mph' }
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                  </Table>
-                                : <div className={styles.forcastContainer}>
-                                    <div className={styles.forcastDay}>
-                                        <img src={this.handleImages[dayIcons[0]]} alt='Clear Skys' className={styles.forcastImage}/>
-                                        <h3>{Math.round(dayInfo[0])}{this.props.unit === 'metric' 
-                                            ? '°C'
-                                            : '°F'}
-                                        </h3>
-                                        <p>{Math.round(dayInfo[1])}{this.props.unit === 'metric' 
-                                            ? '°C'
-                                            : '°F'}
-                                        </p>
-                                    </div>
-                                    <div className={styles.forcastDay}> 
-                                        <img src={this.handleImages[dayIcons[1]]} alt='Clear Skys' className={styles.forcastImage}/>
-                                        <h3>{Math.round(dayInfo[2])}{this.props.unit === 'metric' 
-                                            ? '°C'
-                                            : '°F'}
-                                        </h3>
-                                        <p>{Math.round(dayInfo[3])}{this.props.unit === 'metric' 
-                                            ? '°C'
-                                            : '°F'}
-                                        </p>
-                                    </div>
-                                    <div className={styles.forcastDay}> 
-                                        <img src={this.handleImages[dayIcons[2]]} alt='Clear Skys' className={styles.forcastImage}/>
-                                        <h3>{Math.round(dayInfo[4])}{this.props.unit === 'metric' 
-                                            ? '°C'
-                                            : '°F'}
-                                        </h3>
-                                        <p>{Math.round(dayInfo[5])}{this.props.unit === 'metric' 
-                                            ? '°C'
-                                            : '°F'}
-                                        </p>
-                                    </div>
-                                    <div className={styles.forcastDay}>
-                                        <img src={this.handleImages[dayIcons[3]]} alt='Clear Skys' className={styles.forcastImage}/>
-                                        <h3>{Math.round(dayInfo[6])}{this.props.unit === 'metric' 
-                                            ? '°C'
-                                            : '°F'}
-                                        </h3>
-                                        <p>{Math.round(dayInfo[7])}{this.props.unit === 'metric' 
-                                            ? '°C'
-                                            : '°F'}
-                                        </p>
-                                    </div>
-                                    <div className={styles.forcastDay}>
-                                        <img src={this.handleImages[dayIcons[4]]} alt='Clear Skys' className={styles.forcastImage}/>
-                                        <h3>{Math.round(dayInfo[8])}{this.props.unit === 'metric' 
-                                            ? '°C'
-                                            : '°F'}
-                                        </h3>
-                                        <p>{Math.round(dayInfo[9])}{this.props.unit === 'metric' 
-                                            ? '°C'
-                                            : '°F'}
-                                         </p>
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    </Card.Body>
-                </Card>
-              : null}
+                            </div>
+                            <hr/>
+                            <div className={styles.underLine}>
+                                {this.state.showDetails === true 
+                                    ?  <Table style={{width: '100%'}} striped bordered>
+                                            <tbody>
+                                               <tr>
+                                                   <td>High Temperature</td>
+                                                   <td>{main.temp_max}°C</td>
+                                               </tr>
+                                               <tr>
+                                                   <td>Low Temperature</td>
+                                                   <td>{main.temp_min}°C</td>
+                                               </tr>
+                                               <tr>
+                                                   <td>Humidity</td>
+                                                   <td>{main.humidity}%</td>
+                                               </tr>
+                                               <tr>
+                                                   <td>Sunrise</td>
+                                                   <td>0{sunrise}</td>
+                                               </tr>
+                                               <tr>
+                                                   <td>Sunset</td>
+                                                   <td>{sunset}</td>
+                                               </tr>
+                                               <tr>
+                                                   <td>Pressure</td>
+                                                   <td>{main.pressure} hPa</td>
+                                               </tr>
+                                               <tr>
+                                                   <td>Wind Speed</td>
+                                                   <td>{this.props.data.wind.speed} m/s</td>
+                                               </tr>
+                                            </tbody>
+                                        </Table>
+                                    :   <div className={styles.forcastContainer}>
+                                            <div className={styles.forcastDay}>
+                                                <img src={this.handleImages[dayIcons[0]]} alt='Clear Skys' className={styles.forcastImage}/>
+                                                <h3>{Math.round(dayInfo[0])}°C</h3>
+                                                <p>{Math.round(dayInfo[1])}°C</p>
+                                            </div>
+                                            <div className={styles.forcastDay}> 
+                                                <img src={this.handleImages[dayIcons[1]]} alt='Clear Skys' className={styles.forcastImage}/>
+                                                <h3>{Math.round(dayInfo[2])}°C</h3>
+                                                <p>{Math.round(dayInfo[3])}°C</p>
+                                            </div>
+                                            <div className={styles.forcastDay}> 
+                                                <img src={this.handleImages[dayIcons[2]]} alt='Clear Skys' className={styles.forcastImage}/>
+                                                <h3>{Math.round(dayInfo[4])}°C</h3>
+                                                <p>{Math.round(dayInfo[5])}°C</p>
+                                            </div>
+                                            <div className={styles.forcastDay}>
+                                                <img src={this.handleImages[dayIcons[3]]} alt='Clear Skys' className={styles.forcastImage}/>
+                                                <h3>{Math.round(dayInfo[6])}°C</h3>
+                                                <p>{Math.round(dayInfo[7])}°C</p>
+                                            </div>
+                                            <div className={styles.forcastDay}>
+                                                <img src={this.handleImages[dayIcons[4]]} alt='Clear Skys' className={styles.forcastImage}/>
+                                                <h3>{Math.round(dayInfo[8])}°C</h3>
+                                                <p>{Math.round(dayInfo[9])}°C</p>
+                                            </div>
+                                        </div>
+                                }
+                            </div>
+                        </Card.Body>
+                    </Card>
+                :   <span className={styles.span}>
+                        <h3>Type in the country code and name of the city you wish to view. If you would like to view results in <br/> imperial units choose °F.</h3>
+                    </span>}
             </div>
         );
     }
