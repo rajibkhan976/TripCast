@@ -4,11 +4,17 @@ import InputGroup from '../../node_modules/react-bootstrap/InputGroup'
 import FormControl from '../../node_modules/react-bootstrap/FormControl'
 import Form from '../../node_modules/react-bootstrap/Form'
 import styles from './CSS/home.module.css'
+import ToggleButtonGroup from '../../node_modules/react-bootstrap/ToggleButtonGroup'
+import ToggleButton from '../../node_modules/react-bootstrap/ToggleButton'
 
 
 const SearchComponent = (props) => (
            
   <Form onSubmit={props.fetchWeather}>
+  <ToggleButtonGroup type="radio" name="options" defaultValue='celsius' className={styles.buttons}>
+      <ToggleButton value='celsius'>°C</ToggleButton>
+      <ToggleButton value='fahrenheit'>°F</ToggleButton>
+    </ToggleButtonGroup>
          <InputGroup className="mb-3">
      <InputGroup.Prepend>
        <InputGroup.Text id="inputGroup-sizing-default" >Country</InputGroup.Text>

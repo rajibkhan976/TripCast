@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import Table from 'react-bootstrap/Table'
+import Table from 'react-bootstrap/Table';
+import LogInComponent from './LogInComponent';
 import styles from './CSS/WeatherDisplay.module.css'
 
 import ClearSkyDay from '../Images/ClearSkyDay.svg';
@@ -50,9 +51,7 @@ class WeatherDisplayComponent extends Component {
        '50d': Fog,
        '50n': Fog
     };
-
     
-
 
     render() {
         
@@ -61,12 +60,28 @@ class WeatherDisplayComponent extends Component {
         let sys = this.props.data.sys
         let sunrise = ""
         let sunset = ""
+        
+        let dayIcons = []
+        if(this.props.fdata && this.props.fdata.length > 0){
+            for(let i = 0; i < this.props.fdata.length; i++){                
+              if(this.props.fdata[i].weather.length > 0){
+                dayIcons.push(this.props.fdata[i].weather[0].icon);
+              }
+            }
+        }
+        
+        let dayInfo = []
+        if (this.props.fdata && this.props.fdata.length > 0){
+            for(let i = 0; i < this.props.fdata.length; i++){
+                dayInfo.push(this.props.fdata[i].main.temp_max)
+                dayInfo.push(this.props.fdata[i].main.temp_min)
+            }
+        }           
+
         if (sys) {
             sunrise = (new Date(sys.sunrise*1000).getHours() +":"+ new Date(sys.sunrise*1000).getMinutes());
             sunset = (new Date(sys.sunset*1000).getHours() +":"+ new Date(sys.sunset*1000).getMinutes());
-        }
-        console.log(sunrise);
-        
+        }        
         
 
         return (
@@ -74,16 +89,21 @@ class WeatherDisplayComponent extends Component {
               {this.props.data.name  
                 ? <Card>
                         <Card.Body>
-                            <h1>Location</h1>
-                            <div className={styles.today}>
+                            <h1>{this.props.data.name}, {sys.country}</h1>
+                            <div className={styles.topBox}>
+                                <div className={styles.today}>
                                 <div>
                                     <img src={this.handleImages[weather[0].icon]} alt='Clear Skys'className={styles.todayImage}/>
                                     <h2>{weather[0].discription}</h2>
                                 </div>
                                 <div className={styles.todayTemp}>
-                                    <h1>{Math.round(main.temp)}</h1>
-                                    <h4>{Math.round(main.temp_min)}  {Math.round(main.temp_max)}</h4>
+                                    <h1>{Math.round(main.temp)}°C</h1>
+                                    <h4>{Math.round(main.temp_min)}°C  {Math.round(main.temp_max)}°C</h4>
                                     <Button onClick={this.toggleDetails} size='sm' variant='info'>Details</Button>
+                                </div>
+                                </div>
+                                <div className={styles.buttons}> 
+                                    <LogInComponent/>
                                 </div>
                             </div>
                             <hr/>
@@ -93,19 +113,19 @@ class WeatherDisplayComponent extends Component {
                                             <tbody>
                                                <tr>
                                                    <td>High Temperature</td>
-                                                   <td>{main.temp_max}</td>
+                                                   <td>{main.temp_max}°C</td>
                                                </tr>
                                                <tr>
                                                    <td>Low Temperature</td>
-                                                   <td>{main.temp_min}</td>
+                                                   <td>{main.temp_min}°C</td>
                                                </tr>
                                                <tr>
                                                    <td>Humidity</td>
-                                                   <td>{main.humidity}</td>
+                                                   <td>{main.humidity}%</td>
                                                </tr>
                                                <tr>
                                                    <td>Sunrise</td>
-                                                   <td>{sunrise}</td>
+                                                   <td>0{sunrise}</td>
                                                </tr>
                                                <tr>
                                                    <td>Sunset</td>
@@ -113,34 +133,39 @@ class WeatherDisplayComponent extends Component {
                                                </tr>
                                                <tr>
                                                    <td>Pressure</td>
-                                                   <td>{main.pressure}</td>
+                                                   <td>{main.pressure} hPa</td>
                                                </tr>
                                                <tr>
-                                                   <td>Wind Speed (m/s)</td>
-                                                   <td>{this.props.data.wind.speed}</td>
+                                                   <td>Wind Speed</td>
+                                                   <td>{this.props.data.wind.speed} m/s</td>
                                                </tr>
                                             </tbody>
                                         </Table>
                                     :   <div className={styles.forcastContainer}>
                                             <div className={styles.forcastDay}>
-                                                <img src={this.handleImages['10d']} alt='Clear Skys' className={styles.forcastImage}/>
-                                                <h3>20°C</h3>
-                                                <p>12°C</p>
+                                                <img src={this.handleImages[dayIcons[0]]} alt='Clear Skys' className={styles.forcastImage}/>
+                                                <h3>{Math.round(dayInfo[0])}°C</h3>
+                                                <p>{Math.round(dayInfo[1])}°C</p>
                                             </div>
                                             <div className={styles.forcastDay}> 
-                                                <img src={this.handleImages['50d']} alt='Clear Skys' className={styles.forcastImage}/>
-                                                <h3>20°C</h3>
-                                                <p>12°C</p>
+                                                <img src={this.handleImages[dayIcons[1]]} alt='Clear Skys' className={styles.forcastImage}/>
+                                                <h3>{Math.round(dayInfo[2])}°C</h3>
+                                                <p>{Math.round(dayInfo[3])}°C</p>
                                             </div>
                                             <div className={styles.forcastDay}> 
-                                                <img src={this.handleImages['02d']} alt='Clear Skys' className={styles.forcastImage}/>
-                                                <h3>20°C</h3>
-                                                <p>12°C</p>
+                                                <img src={this.handleImages[dayIcons[2]]} alt='Clear Skys' className={styles.forcastImage}/>
+                                                <h3>{Math.round(dayInfo[4])}°C</h3>
+                                                <p>{Math.round(dayInfo[5])}°C</p>
                                             </div>
                                             <div className={styles.forcastDay}>
-                                                <img src={this.handleImages['01d']} alt='Clear Skys' className={styles.forcastImage}/>
-                                                <h3>20°C</h3>
-                                                <p>12°C</p>
+                                                <img src={this.handleImages[dayIcons[3]]} alt='Clear Skys' className={styles.forcastImage}/>
+                                                <h3>{Math.round(dayInfo[6])}°C</h3>
+                                                <p>{Math.round(dayInfo[7])}°C</p>
+                                            </div>
+                                            <div className={styles.forcastDay}>
+                                                <img src={this.handleImages[dayIcons[4]]} alt='Clear Skys' className={styles.forcastImage}/>
+                                                <h3>{Math.round(dayInfo[8])}°C</h3>
+                                                <p>{Math.round(dayInfo[9])}°C</p>
                                             </div>
                                         </div>
                                 }

@@ -11,7 +11,8 @@ export class HomeScreen extends Component {
     super();
     this.state = {
       data: {},
-      fdata: {}
+      fdata: {},
+      unit: ''
     };
   }
 
@@ -23,8 +24,22 @@ export class HomeScreen extends Component {
     const country = e.target.elements.country.value; //Stores the country value from SearchComponent
     const city = e.target.elements.city.value; //Stores the city value from SearchComponent
     const apiKey = '55f970a5b61819d7f237eb1cb2be6bfd'; //This is the API key to OpenWeather
+    console.log('this is options', e.target.elements.options.value)
+    let unit = ''
+    if (e.target.elements.options.value === 'celsius') {
+      unit = 'metric'
+    } else if (e.target.elements.options.value === 'fahrenheit') {
+      unit = 'imperial'
+    }
+    
+    if (e.target.elements.options.value) {
+      this.setState({
+        unit: unit
+      })
+    }
+
     fetch(
-      `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&APPID=${apiKey}&units=metric`
+      `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&APPID=${apiKey}&units=${unit}`
     )
       .then(res => res.json())
       .then(data => {
@@ -37,13 +52,13 @@ export class HomeScreen extends Component {
         }
       })
       .catch(error => console.error(error));
-    this.fetchForecast(city, country, apiKey);
+    this.fetchForecast(city, country, apiKey, unit);
   };
 
   //I take in three arguments from the function above this and uses those to fetch the forecast
-  fetchForecast = (city, country, apiKey) => {
+  fetchForecast = (city, country, apiKey, unit) => {
     fetch(
-      `http://api.openweathermap.org/data/2.5/forecast?q=${city},${country}&APPID=${apiKey}&units=metric`
+      `http://api.openweathermap.org/data/2.5/forecast?q=${city},${country}&APPID=${apiKey}&units=${unit}`
     )
       .then(res => res.json())
       .then(data => {
@@ -66,7 +81,7 @@ export class HomeScreen extends Component {
   };
 
   render() {
-    console.log('state fdata', this.state.fdata);
+    console.log('state unit', this.state.unit);
     return (
       <div>
         <div className={styles.home}>
@@ -74,10 +89,8 @@ export class HomeScreen extends Component {
           <WeatherDisplayComponent
             data={this.state.data}
             fdata={this.state.fdata}
+            unit={this.state.unit}
           />
-        </div>
-        <div>
-          <LogInComponent />
         </div>
       </div>
     );
