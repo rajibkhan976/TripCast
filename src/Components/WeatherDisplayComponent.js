@@ -278,7 +278,7 @@ class WeatherDisplayComponent extends Component {
         'ZM' : 'Zambia',
         'ZW' : 'Zimbabwe'
     };
-    
+    git
 
     handleImages = {
        '01d': ClearSkyDay,
@@ -343,20 +343,29 @@ class WeatherDisplayComponent extends Component {
             <div>
               {this.props.data.name  
                 ? <Card>
-                        <Card.Body>
-                            <h1>{this.props.data.name}, {country}</h1>
-                            <div className={styles.topBox}>
-                                <div className={styles.today}>
+                    <Card.Body>
+                        <h1>{this.props.data.name}, {country}</h1>
+                        <div className={styles.topBox}>
+                            <div className={styles.today}>
                                 <div>
                                     <img src={this.handleImages[weather[0].icon]} alt='Clear Skys'className={styles.todayImage}/>
                                     <h2>{weather[0].discription}</h2>
                                 </div>
                                 <div className={styles.todayTemp}>
-                                    <h1>{Math.round(main.temp)}°C</h1>
-                                    <h4>{Math.round(main.temp_min)}°C  {Math.round(main.temp_max)}°C</h4>
+                                    <h1>{Math.round(main.temp)}{this.props.unit === 'metric' 
+                                        ? '°C'
+                                        : '°F'}
+                                    </h1>
+                                    <h4>{Math.round(main.temp_min)}{this.props.unit === 'metric' 
+                                        ? '°C '
+                                        : '°F '}
+                                        {Math.round(main.temp_max)}{this.props.unit === 'metric' 
+                                        ? '°C'
+                                        : '°F'}
+                                    </h4>
                                     <Button onClick={this.toggleDetails} size='sm' variant='info'>Details</Button>
                                 </div>
-                                </div>
+                            </div>
                                 <div className={styles.buttons}> 
                                     <LogInComponent/>
                                 </div>
@@ -427,9 +436,9 @@ class WeatherDisplayComponent extends Component {
                             </div>
                         </Card.Body>
                     </Card>
-                :  <span className={styles.instructions}>
-                <h3>Type in the country code and name of the city you wish to view. If you would like to view results in <br/> imperial units choose °F.</h3>
-              </span>}
+                :   <span className={styles.span}>
+                        <h3>Type in the country code and name of the city you wish to view. If you would like to view results in <br/> imperial units choose °F.</h3>
+                    </span>}
             </div>
         );
     }
