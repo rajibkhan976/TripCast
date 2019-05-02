@@ -427,7 +427,9 @@ class WeatherDisplayComponent extends Component {
                             </div>
                         </Card.Body>
                     </Card>
-                : null}
+                :  <span className={styles.instructions}>
+                <h3>Type in the country code and name of the city you wish to view. If you would like to view results in <br/> imperial units choose °F.</h3>
+              </span>}
             </div>
         );
     }

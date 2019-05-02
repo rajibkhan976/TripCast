@@ -4,7 +4,9 @@
     width: 60%;
     margin: auto;
     padding: 20px;
+    
 }
 
-.buttons {
+.instructions {
+    text-align: center;
 }

@@ -51,6 +51,7 @@ export class HomeScreen extends Component {
         }
       })
       .catch(error => console.error(error));
+      
     this.fetchForecast(city, country, apiKey, unit);
   };
 
