@@ -120,7 +120,10 @@ class LogInComponent extends Component {
             </Form.Group>
             {(this.state.loginStatus) ?
               null :
-              <Button variant="primary" type="submit" onClick= {this.Login} >Login</Button>
+              <div>
+                <Button variant="primary" type="submit" onClick= {this.Login} >Login</Button>
+                <Button variant="primary" type="submit" onClick= {this.Signup} style={{margin: '5px'}}>Signup</Button>
+              </div>
             }
             {(!this.state.signupStatus && this.state.loginStatus) ?
               <Button variant="primary" type="submit" onClick= {this.Signup}>Signup</Button> :
