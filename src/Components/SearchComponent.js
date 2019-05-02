@@ -32,6 +32,9 @@ const SearchComponent = props => (
         name="country"
         aria-label="Default"
         aria-describedby="inputGroup-sizing-default"
+        placeholder="Country Code/Country..."
+        required
+        
       />
       <InputGroup.Prepend>
         <InputGroup.Text id="inputGroup-sizing-default" type="text">
@@ -42,6 +45,8 @@ const SearchComponent = props => (
         name="city"
         aria-label="Default"
         aria-describedby="inputGroup-sizing-default"
+        placeholder="City..."
+        required
       />
       <Button variant="primary" type="submit">
         Get Weather
