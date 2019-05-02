@@ -18,11 +18,6 @@
     font-family: 'Pacifico';
     font-weight: 50;
     font-size: 60px;
-    text-decoration: none;
-}
-
-.logoClick:hover {
-    text-decoration:none;
 }
 
 .navLinks {
@@ -40,17 +35,9 @@
     color:#4596CC;
 }
 
-.navLinks:hover {
+.list:hover {
     text-decoration:none;
     color: rgb(43, 43, 43);
-}
-
-.loginIcon {
-    width:80%;
-}
-
-.loginIconPosition {
-    margin-right:90px;
 }
 
 .google {
