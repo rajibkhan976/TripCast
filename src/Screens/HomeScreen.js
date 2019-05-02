@@ -3,20 +3,22 @@ import SearchComponent from '../Components/SearchComponent';
 import WeatherDisplayComponent from '../Components/WeatherDisplayComponent';
 import styles from '../Components/CSS/home.module.css';
 import LogInComponent from '../Components/LogInComponent';
+//Todo, weather converter, imperial, fahrenheit, kelvin
+//TODO, Wrong input
 
 export class HomeScreen extends Component {
   constructor() {
     super();
     this.state = {
       data: {},
-      fdata: {},
+      fdata: {}
     };
   }
 
   //This is a function to fetch the weather from the API
   //This functions sets the selected results from the API as state
   //We also gather the Country and City from input in the SearchComponent
-  fetchWeather = e => {
+  fetchWeather = (e) => {
     e.preventDefault();
     const country = e.target.elements.country.value; //Stores the country value from SearchComponent
     const city = e.target.elements.city.value; //Stores the city value from SearchComponent
@@ -49,10 +51,9 @@ export class HomeScreen extends Component {
         let dateList = [];
         console.log('this is list', list);
         //Here I do a loop to get the weather everyday at 12:00
-        for (var i = 0; i < list.length; i++) { 
+        for (var i = 0; i < list.length; i++) {
           if (list[i].dt_txt.includes('12:00:00')) {
             dateList.push(list[i]);
-            
           }
         }
 
@@ -61,11 +62,11 @@ export class HomeScreen extends Component {
         });
         console.log('date.list', dateList);
       })
-      .catch(error => console.error(error));
+      .catch(error => alert('City not found', error));
   };
 
   render() {
-    console.log('state fdata', this.state.fdata)
+    console.log('state fdata', this.state.fdata);
     return (
       <div>
         <div className={styles.home}>

@@ -51,6 +51,8 @@ class WeatherDisplayComponent extends Component {
        '50n': Fog
     };
 
+    
+
 
     render() {
         
