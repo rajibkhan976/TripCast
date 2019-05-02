@@ -4,6 +4,12 @@
     justify-content: center;
 }
 
+.topBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
 .todayImage {
     width: 100%;
     height: auto;
@@ -40,3 +46,9 @@
     height: auto;
     align-self: center;
 }
+.buttons {
+    display: flex;
+    padding-left: 20px;
+    align-items: center;
+}
+
