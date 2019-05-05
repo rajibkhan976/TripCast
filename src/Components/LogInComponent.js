@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import { Redirect } from 'react-router-dom';
 
 class LogInComponent extends Component {
 
@@ -15,6 +16,7 @@ class LogInComponent extends Component {
       loginStatus: false,
       signupStatus: true
     };
+    console.log(this.props.city);
     localStorage.setItem('users', JSON.stringify(this.state.users));
     localStorage.setItem('loginStatus', this.state.loginStatus);
     console.log(localStorage.getItem('loginStatus'));
@@ -44,15 +46,15 @@ class LogInComponent extends Component {
     if (emailCredential === true && passwordCredential === true) {
       alert('Login successful:)');
       this.setState({loginStatus: true, signupStatus: false});
-      localStorage.setItem('loginStatus', true);
+      localStorage.setItem('loginStatus', this.state.loginStatus);
       console.log(localStorage.getItem('loginStatus'));
-      localStorage.setItem('signupStatus', false);
+      localStorage.setItem('signupStatus', this.state.signupStatus);
       console.log(localStorage.getItem('signupStatus'));
     } else {
       this.setState({loginStatus: true, signupStatus: false});
-      localStorage.setItem('loginStatus', true);
+      localStorage.setItem('loginStatus', this.state.loginStatus);
       console.log(localStorage.getItem('loginStatus'));
-      localStorage.setItem('signupStatus', false);
+      localStorage.setItem('signupStatus', this.state.signupStatus);
       console.log(localStorage.getItem('signupStatus'));
       alert('Login failed! Please signup.');
     }
@@ -65,15 +67,15 @@ class LogInComponent extends Component {
       emailCredential = (element.email === this.userEmail);
       passwordCredential = (element.password === this.userPassword);
     })
-    if (emailCredential === false && passwordCredential === false) {
+    if (emailCredential === false && passwordCredential === false && this.userEmail !== undefined && this.userPassword !== undefined) {
       this.setState(prevState => ({
         users: [...prevState.users, {email: this.userEmail, password: this.userPassword}],
         loginStatus: false,
         signupStatus: true
       }));
-      localStorage.setItem('loginStatus', false);
+      localStorage.setItem('loginStatus', this.state.loginStatus);
       console.log(localStorage.getItem('loginStatus'));
-      localStorage.setItem('signupStatus', true);
+      localStorage.setItem('signupStatus', this.state.signupStatus);
       console.log(localStorage.getItem('signupStatus'));
       localStorage.setItem('users', JSON.stringify([
         {email: this.userEmail, password: this.userPassword}
@@ -84,9 +86,9 @@ class LogInComponent extends Component {
       })
     } else {
       this.setState({loginStatus: false, signupStatus: true});
-      localStorage.setItem('loginStatus', false);
+      localStorage.setItem('loginStatus', this.state.loginStatus);
       console.log(localStorage.getItem('loginStatus'));
-      localStorage.setItem('signupStatus', true);
+      localStorage.setItem('signupStatus', this.state.signupStatus);
       console.log(localStorage.getItem('signupStatus'));
       alert('You are already signed up.');
     }
@@ -101,6 +103,9 @@ class LogInComponent extends Component {
   }
 
   render () {
+    if (this.state.loginStatus) {
+      return <Redirect to={`/planner/${this.props.city}`} />;
+    }
     return (
       <>
         <Button variant="primary" onClick={this.handleShow}>Trip Planner</Button>

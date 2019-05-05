@@ -300,10 +300,10 @@ class WeatherDisplayComponent extends Component {
        '50d': Fog,
        '50n': Fog
     };
-    
+
 
     render() {
-        
+
         let main = this.props.data.main
         let weather = this.props.data.weather
         let sys = this.props.data.sys
@@ -312,20 +312,20 @@ class WeatherDisplayComponent extends Component {
         let country = ''
         let dayIcons = []
         if(this.props.fdata && this.props.fdata.length > 0){
-            for(let i = 0; i < this.props.fdata.length; i++){                
+            for(let i = 0; i < this.props.fdata.length; i++){
               if(this.props.fdata[i].weather.length > 0){
                 dayIcons.push(this.props.fdata[i].weather[0].icon);
               }
             }
         }
-        
+
         let dayInfo = []
         if (this.props.fdata && this.props.fdata.length > 0){
             for(let i = 0; i < this.props.fdata.length; i++){
                 dayInfo.push(this.props.fdata[i].main.temp_max)
                 dayInfo.push(this.props.fdata[i].main.temp_min)
             }
-        }           
+        }
 
         if (sys) {
             sunrise = (new Date(sys.sunrise*1000).getHours() +":"+ new Date(sys.sunrise*1000).getMinutes());
@@ -335,13 +335,13 @@ class WeatherDisplayComponent extends Component {
             } else {
                 country = sys.country;
             }
-            
-        }        
-        
+
+        }
+
 
         return (
             <div>
-              {this.props.data.name  
+              {this.props.data.name
                 ? <Card>
                     <Card.Body>
                         <h1>{this.props.data.name}, {country}</h1>
@@ -352,27 +352,27 @@ class WeatherDisplayComponent extends Component {
                                     <h2>{weather[0].discription}</h2>
                                 </div>
                                 <div className={styles.todayTemp}>
-                                    <h1>{Math.round(main.temp)}{this.props.unit === 'metric' 
+                                    <h1>{Math.round(main.temp)}{this.props.unit === 'metric'
                                         ? '°C'
                                         : '°F'}
                                     </h1>
-                                    <h4>{Math.round(main.temp_min)}{this.props.unit === 'metric' 
+                                    <h4>{Math.round(main.temp_min)}{this.props.unit === 'metric'
                                         ? '°C '
                                         : '°F '}
-                                        {Math.round(main.temp_max)}{this.props.unit === 'metric' 
+                                        {Math.round(main.temp_max)}{this.props.unit === 'metric'
                                         ? '°C'
                                         : '°F'}
                                     </h4>
                                     <Button onClick={this.toggleDetails} size='sm' variant='info'>Details</Button>
                                 </div>
                             </div>
-                                <div className={styles.buttons}> 
-                                    <LogInComponent/>
+                                <div className={styles.buttons}>
+                                    <LogInComponent city={this.props.data.name}/>
                                 </div>
                             </div>
                             <hr/>
                             <div className={styles.underLine}>
-                                {this.state.showDetails === true 
+                                {this.state.showDetails === true
                                     ?  <Table style={{width: '100%'}} striped bordered>
                                             <tbody>
                                                <tr>
@@ -411,12 +411,12 @@ class WeatherDisplayComponent extends Component {
                                                 <h3>{Math.round(dayInfo[0])}°C</h3>
                                                 <p>{Math.round(dayInfo[1])}°C</p>
                                             </div>
-                                            <div className={styles.forcastDay}> 
+                                            <div className={styles.forcastDay}>
                                                 <img src={this.handleImages[dayIcons[1]]} alt='Clear Skys' className={styles.forcastImage}/>
                                                 <h3>{Math.round(dayInfo[2])}°C</h3>
                                                 <p>{Math.round(dayInfo[3])}°C</p>
                                             </div>
-                                            <div className={styles.forcastDay}> 
+                                            <div className={styles.forcastDay}>
                                                 <img src={this.handleImages[dayIcons[2]]} alt='Clear Skys' className={styles.forcastImage}/>
                                                 <h3>{Math.round(dayInfo[4])}°C</h3>
                                                 <p>{Math.round(dayInfo[5])}°C</p>

@@ -7,6 +7,7 @@ import AboutScreen from './Screens/AboutScreen';
 import MyPageScreen from './Screens/MyPageScreen';
 import RecentScreen from './Screens/RecentScreen';
 import TripPlannerScreen from './Screens/TripPlannerScreen';
+import TripPlannerComponent from './Components/TripPlannerComponent';
 
 import './App.css';
 
@@ -23,7 +24,7 @@ class App extends Component {
         <Route exact path="/about" component={ AboutScreen } />
         <Route exact path="/mypage" component={ MyPageScreen } />
         <Route exact path="/recent" component={ RecentScreen } />
-        <Route exact path="/planner" component={ TripPlannerScreen } />
+        <Route exact path="/planner/:id" component={ TripPlannerComponent } />
       </Router>
     );
   }
