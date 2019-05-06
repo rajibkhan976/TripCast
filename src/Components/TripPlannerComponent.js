@@ -9,17 +9,23 @@ class TripPlannerComponent extends Component {
     this.state = {
       localEvents: [],
       personalEvents: [],
-      error: null
+      error: null,
+      info: false,
+      toggleInfoIndex: undefined
     };
   }
 
   componentDidMount () {
     let apiToken = 'zqjuWkOi7vUEcnpOozh3wzbqqMzcl9';
     //fetch request for predicthq api
-    fetch("https://api.predicthq.com/v1/events/?q=" + this.props.match.params.id, {
+    fetch(`https://api.predicthq.com/v1/events/?q=${this.props.match.params.id}&category=conferences,expos,concerts,festivals,performing-arts,sports,community
+`, {
       method: 'GET',
       mode: 'cors',
-      headers: {'Authorization': `Bearer ${apiToken}`}
+      headers: {
+        'Authorization': `Bearer ${apiToken}`,
+        'Accept': 'application/json'
+      }
     })
     .then(res => res.json().then((value) => {
       this.setState({
@@ -30,9 +36,9 @@ class TripPlannerComponent extends Component {
     .catch((err) => console.log(err));
   }
 
-  addEvent = (index, e) => {
+  addEvent = (addIndex, e) => {
     for (var eventIndex in this.state.localEvents) {
-      if (index == eventIndex) {
+      if (addIndex == eventIndex) {
         console.log(this.state.localEvents[eventIndex]);
         let addEventTitle = this.state.localEvents[eventIndex].title;
         let addEventLabel = this.state.localEvents[eventIndex].labels.toString();
@@ -43,7 +49,7 @@ class TripPlannerComponent extends Component {
         this.setState(prevState => ({
           personalEvents: [...prevState.personalEvents,
             {
-              eventIndex: index,
+              eventIndex: addIndex,
               eventTitle: addEventTitle,
               eventLabel: addEventLabel,
               eventStartDate: addEventStartDate,
@@ -53,7 +59,7 @@ class TripPlannerComponent extends Component {
             }
           ]
         }))
-        this.setState({localEvents: this.state.localEvents.slice((index + 1), (this.state.localEvents.length + 1))});
+        this.setState({localEvents: this.state.localEvents.filter((value, index) => {return (index !== addIndex)})});
       }
     }
     console.log(this.state.personalEvents);
@@ -62,7 +68,28 @@ class TripPlannerComponent extends Component {
   removeEvent = (removeIndex, e) => {
     for (var activityIndex in this.state.personalEvents) {
       if (removeIndex == activityIndex) {
-        this.setState({personalEvents: this.state.personalEvents.slice((removeIndex + 1), (this.state.personalEvents.length + 1))});
+        this.setState({personalEvents: this.state.personalEvents.filter((value, index) => {return (index !== removeIndex)})});
+        this.setState(prevState => ({localEvents: [
+          {
+            index: removeIndex,
+            title: this.state.personalEvents[removeIndex].eventTitle,
+            labels: this.state.personalEvents[removeIndex].eventLabel.split(','),
+            start: this.state.personalEvents[removeIndex].eventStartDate + 'T' + this.state.personalEvents[removeIndex].eventStartTime + 'Z',
+            end: this.state.personalEvents[removeIndex].eventEndDate + 'T' + this.state.personalEvents[removeIndex].eventEndTime + 'Z'
+          },
+          ...prevState.localEvents
+        ]}));
+      }
+    }
+  }
+
+  toggleDetails = (toggleIndex, e) => {
+    for (var eventIndex in this.state.personalEvents) {
+      if (toggleIndex == eventIndex) {
+        this.setState({
+          info: !this.state.info,
+          toggleInfoIndex: eventIndex
+        });
       }
     }
   }
@@ -79,11 +106,19 @@ class TripPlannerComponent extends Component {
             <ul className="list-group">
              {this.state.personalEvents.map((addedEvent, addedEventIndex) => {
                return <div>
-                       <li className="list-group-item" addedEventKey={addedEventIndex}>
-                        <h2> {addedEvent.eventTitle} &nbsp;
-                        <button type="button" className="btn btn-info" onClick={(e) => this.removeEvent(addedEventIndex, e)}>Remove</button>
-                        </h2>
-
+                       <li className="list-group-item" addedeventkey={addedEventIndex}>
+                        <h2> {addedEvent.eventTitle}</h2> <br/>
+                        {(this.state.info && this.state.toggleInfoIndex == addedEventIndex) ?
+                          <div>
+                            <p>Tags: {addedEvent.eventLabel}</p>
+                            <p>Start date: {addedEvent.eventStartDate}</p>
+                            <p>Start time: {addedEvent.eventStartTime}</p>
+                            <p>End date: {addedEvent.eventEndDate}</p>
+                            <p>End time: {addedEvent.eventEndTime}</p>
+                          </div>
+                        : null }
+                        <button type="button" className="btn btn-primary" onClick={(e) => this.toggleDetails(addedEventIndex, e)}>Toggle details</button> &nbsp;
+                        <button type="button" className="btn btn-info" onClick={(e) => this.removeEvent(addedEventIndex, e)}>Remove</button> <br/>
                        </li>
                       </div>
              })}
