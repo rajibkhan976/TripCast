@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import NavBarComponent from './Components/Navigation/NavBarComponent';
+import NavBarComponent from './Components/NavBarComponent';
 import HomeScreen from './Screens/HomeScreen';
 import AboutScreen from './Screens/AboutScreen';
 import MyPageScreen from './Screens/MyPageScreen';

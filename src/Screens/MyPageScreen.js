@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 
+import MyPageComponent from '../Components/MyPageComponent';
+
 class MyPageScreen extends Component {
     render () {
         return (
-            <h2>MyPageScreen</h2>
+            <MyPageComponent />
         )
     }
 }

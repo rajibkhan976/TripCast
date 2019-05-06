@@ -11,6 +11,7 @@ class LogInComponent extends Component {
     this.state = {users: [
       {email: 'admin@gmail.com', password: 'admin'}
     ],
+      showButton: this.props.showButton,
       show: false,
       loginStatus: false,
       signupStatus: true
@@ -103,7 +104,11 @@ class LogInComponent extends Component {
   render () {
     return (
       <>
-        <Button variant="primary" onClick={this.handleShow}>Trip Planner</Button>
+        {this.state.showButton ? 
+          <Button show="primary" onClick={this.handleShow}>Trip Planner</Button>
+        :
+          null
+        }
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Signup/Login</Modal.Title>
@@ -120,7 +125,10 @@ class LogInComponent extends Component {
             </Form.Group>
             {(this.state.loginStatus) ?
               null :
-              <Button variant="primary" type="submit" onClick= {this.Login} >Login</Button>
+              <div>
+                <Button variant="primary" type="submit" onClick= {this.Login} >Login</Button>
+                <Button variant="primary" type="submit" onClick= {this.Signup} style={{margin: '5px'}}>Signup</Button>
+              </div>
             }
             {(!this.state.signupStatus && this.state.loginStatus) ?
               <Button variant="primary" type="submit" onClick= {this.Signup}>Signup</Button> :
