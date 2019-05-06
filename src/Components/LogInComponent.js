@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import Jumbotron from 'react-bootstrap/Jumbotron';
 import { Redirect } from 'react-router-dom';
 
 class LogInComponent extends Component {
@@ -39,10 +40,12 @@ class LogInComponent extends Component {
   Login = (e) => {
     let emailCredential;
     let passwordCredential;
-    this.state.users.find((element) => {
-      emailCredential = (element.email === this.userEmail);
-      passwordCredential = (element.password === this.userPassword);
-    })
+    if (this.userEmail !== undefined && this.userPassword !== undefined) {
+      this.state.users.find((element) => {
+        emailCredential = (element.email === this.userEmail);
+        passwordCredential = (element.password === this.userPassword);
+      });
+    }
     if (emailCredential === true && passwordCredential === true) {
       alert('Login successful:)');
       this.setState({loginStatus: 'true', signupStatus: 'false'});
@@ -102,6 +105,12 @@ class LogInComponent extends Component {
     this.setState({ show: true });
   }
 
+  Logout = (e) => {
+    this.setState({loginStatus: 'false'});
+    this.userEmail = undefined;
+    this.userPassword = undefined;
+  }
+
   render () {
     if (this.state.loginStatus === 'true') {
       return <Redirect to={`/planner/${this.props.city}`} />;
@@ -114,24 +123,31 @@ class LogInComponent extends Component {
             <Modal.Title>Signup/Login</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-          <Form>
-            <Form.Group controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" onChange= {this.handleEmailInput} />
-            </Form.Group>
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" onChange= {this.handlePasswordInput} />
-            </Form.Group>
-            {(this.state.loginStatus === 'false' && this.state.signupStatus === 'true') ?
-            <Button variant="primary" type="submit" onClick= {this.Login} >Login</Button>
-             : null
-            }
-            {(this.state.signupStatus === 'false' && this.state.loginStatus === 'false') ?
-              <Button variant="primary" type="submit" onClick= {this.Signup}>Signup</Button>
-              : null
-            }
-            </Form>
+          {(this.state.loginStatus === 'true') ?
+            <Jumbotron>
+              <p>You are already loggedin.</p>
+              <Button variant="primary" type="submit" onClick= {this.Logout} >Logout</Button>
+            </Jumbotron>
+            :
+            <Form>
+              <Form.Group controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control type="email" placeholder="Enter email" onChange= {this.handleEmailInput} />
+              </Form.Group>
+              <Form.Group controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control type="password" placeholder="Password" onChange= {this.handlePasswordInput} />
+              </Form.Group>
+              {(this.state.loginStatus === 'false' && this.state.signupStatus === 'true') ?
+              <Button variant="primary" type="submit" onClick= {this.Login} >Login</Button>
+               : null
+              }
+              {(this.state.signupStatus === 'false' && this.state.loginStatus === 'false') ?
+                <Button variant="primary" type="submit" onClick= {this.Signup}>Signup</Button>
+                : null
+              }
+              </Form>
+        }
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={this.handleClose}>Close</Button>

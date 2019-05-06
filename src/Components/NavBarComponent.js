@@ -6,6 +6,11 @@ import Navbar from 'react-bootstrap/Navbar';
 class NavBarComponent extends Component {
 
     render() {
+      let userInfo = localStorage.getItem('users');
+      let userId;
+      JSON.parse(userInfo).forEach((element) => {
+                        userId = element.email;
+                      });
         return (
             <div>
                 <div id="google_translate_element" className={style.google}/>
@@ -20,6 +25,7 @@ class NavBarComponent extends Component {
                         <NavLink className={style.navLinks} activeClassName={style.activeLink} to="/planner">Trip Planner</NavLink><br/>
                         <NavLink className={style.navLinks} activeClassName={style.activeLink} to="/recent">Recent</NavLink>
                         <NavLink className={style.navLinks} activeClassName={style.activeLink} to="/about">About</NavLink>
+                        <NavLink className={style.navLinks} activeClassName={style.activeLink} to="/logout">{userId}</NavLink>
                     </Navbar.Collapse>
                 </Navbar>
             </div>
