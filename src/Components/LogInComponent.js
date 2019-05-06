@@ -13,8 +13,8 @@ class LogInComponent extends Component {
       {email: 'admin@gmail.com', password: 'admin'}
     ],
       show: false,
-      loginStatus: false,
-      signupStatus: true
+      loginStatus: 'false',
+      signupStatus: 'true'
     };
     console.log(this.props.city);
     localStorage.setItem('users', JSON.stringify(this.state.users));
@@ -45,13 +45,13 @@ class LogInComponent extends Component {
     })
     if (emailCredential === true && passwordCredential === true) {
       alert('Login successful:)');
-      this.setState({loginStatus: true, signupStatus: false});
+      this.setState({loginStatus: 'true', signupStatus: 'false'});
       localStorage.setItem('loginStatus', this.state.loginStatus);
       console.log(localStorage.getItem('loginStatus'));
       localStorage.setItem('signupStatus', this.state.signupStatus);
       console.log(localStorage.getItem('signupStatus'));
     } else {
-      this.setState({loginStatus: true, signupStatus: false});
+      this.setState({loginStatus: 'false', signupStatus: 'false'});
       localStorage.setItem('loginStatus', this.state.loginStatus);
       console.log(localStorage.getItem('loginStatus'));
       localStorage.setItem('signupStatus', this.state.signupStatus);
@@ -70,8 +70,8 @@ class LogInComponent extends Component {
     if (emailCredential === false && passwordCredential === false && this.userEmail !== undefined && this.userPassword !== undefined) {
       this.setState(prevState => ({
         users: [...prevState.users, {email: this.userEmail, password: this.userPassword}],
-        loginStatus: false,
-        signupStatus: true
+        loginStatus: 'false',
+        signupStatus: 'true'
       }));
       localStorage.setItem('loginStatus', this.state.loginStatus);
       console.log(localStorage.getItem('loginStatus'));
@@ -85,7 +85,7 @@ class LogInComponent extends Component {
         console.log(element);
       })
     } else {
-      this.setState({loginStatus: false, signupStatus: true});
+      this.setState({loginStatus: 'false', signupStatus: 'true'});
       localStorage.setItem('loginStatus', this.state.loginStatus);
       console.log(localStorage.getItem('loginStatus'));
       localStorage.setItem('signupStatus', this.state.signupStatus);
@@ -103,7 +103,7 @@ class LogInComponent extends Component {
   }
 
   render () {
-    if (this.state.loginStatus) {
+    if (this.state.loginStatus === 'true') {
       return <Redirect to={`/planner/${this.props.city}`} />;
     }
     return (
@@ -123,16 +123,13 @@ class LogInComponent extends Component {
               <Form.Label>Password</Form.Label>
               <Form.Control type="password" placeholder="Password" onChange= {this.handlePasswordInput} />
             </Form.Group>
-            {(this.state.loginStatus) ?
-              null :
-              <div>
-                <Button variant="primary" type="submit" onClick= {this.Login} >Login</Button>
-                <Button variant="primary" type="submit" onClick= {this.Signup} style={{margin: '5px'}}>Signup</Button>
-              </div>
+            {(this.state.loginStatus === 'false' && this.state.signupStatus === 'true') ?
+            <Button variant="primary" type="submit" onClick= {this.Login} >Login</Button>
+             : null
             }
-            {(!this.state.signupStatus && this.state.loginStatus) ?
-              <Button variant="primary" type="submit" onClick= {this.Signup}>Signup</Button> :
-              null
+            {(this.state.signupStatus === 'false' && this.state.loginStatus === 'false') ?
+              <Button variant="primary" type="submit" onClick= {this.Signup}>Signup</Button>
+              : null
             }
             </Form>
           </Modal.Body>

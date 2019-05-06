@@ -119,7 +119,7 @@ class TripPlannerComponent extends Component {
                         : null }
                         <button type="button" className="btn btn-primary" onClick={(e) => this.toggleDetails(addedEventIndex, e)}>Toggle details</button> &nbsp;
                         <button type="button" className="btn btn-info" onClick={(e) => this.removeEvent(addedEventIndex, e)}>Remove</button> <br/>
-                       </li>
+                       </li> <br/>
                       </div>
              })}
              </ul> : null}
