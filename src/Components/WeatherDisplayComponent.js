@@ -15,14 +15,16 @@ import Storm from '../Images/Storm.svg';
 import Snow from '../Images/Snow.svg';
 import Fog from '../Images/Fog.svg';
 
+//This component takes the API information send down prom the parent Screen and displays it in a nice, readable interface for the user.
 class WeatherDisplayComponent extends Component {
+    //Start by declaring the initial show details property.
     constructor(props) {
         super(props);
         this.state = {
             showDetails: false
         }
     };
-
+    //This function toggles the showDetails state when the button is clicked.
     toggleDetails = (e) => {
         this.setState(this.state.showDetails === false ? {
             showDetails: true
@@ -30,7 +32,7 @@ class WeatherDisplayComponent extends Component {
             showDetails: false
         });
     };
-
+    //Best to keep this minimized. It takes the ISO country code as a key and assigns it a string for nicer display.
     isoCountries = {
         'AF' : 'Afghanistan',
         'AX' : 'Aland Islands',
@@ -278,8 +280,7 @@ class WeatherDisplayComponent extends Component {
         'ZM' : 'Zambia',
         'ZW' : 'Zimbabwe'
     };
-    git
-
+    //This takes the codes sent from the API, and assigns them a local picture because I think they are prettier than the one given by the API.
     handleImages = {
        '01d': ClearSkyDay,
        '01n': ClearSkyNight,
@@ -303,13 +304,14 @@ class WeatherDisplayComponent extends Component {
     
 
     render() {
-        
-        let main = this.props.data.main
+        //This is to help access each of the obj sections more quickly for cleaner inline code.
+        let main = this.props.data.main 
         let weather = this.props.data.weather
         let sys = this.props.data.sys
         let sunrise = ''
         let sunset = ''
         let country = ''
+        //Here is an if statement to address the async loading of information. Used it to push the icon codes to an array for later use.
         let dayIcons = []
         if(this.props.fdata && this.props.fdata.length > 0){
             for(let i = 0; i < this.props.fdata.length; i++){                
@@ -318,14 +320,13 @@ class WeatherDisplayComponent extends Component {
               }
             }
         }
-        console.log(this.props.fdata);
-        
+        //Here various days are fetched and sliced to display readibly.
         let today = new Date();
-        let d0 = (today.toDateString()).slice(0, -5)
-        let d1 = new Date();
+        let d0 = (today.toDateString()).slice(0, -5) //today
+        let d1 = new Date(); //tommorrow, the next day in the forcast.
         d1.setDate(today.getDate()+1)
         d1 = d1.toDateString().slice(0, 3)
-        let d2 = new Date();
+        let d2 = new Date(); //the next next day, ect.
         d2.setDate(today.getDate()+2)
         d2 = d2.toDateString().slice(0, 3)
         let d3 = new Date();
@@ -339,7 +340,7 @@ class WeatherDisplayComponent extends Component {
         d5 = d5.toDateString().slice(0, 3)
         
         
-        
+        //Here is another if statement to address the async loading of information. The temperature highs and lows from the forcast are pushed to an array.
         let dayInfo = []
         if (this.props.fdata && this.props.fdata.length > 0){
             for(let i = 0; i < this.props.fdata.length; i++){
@@ -347,10 +348,12 @@ class WeatherDisplayComponent extends Component {
                 dayInfo.push(this.props.fdata[i].main.temp_min)
             }
         }           
-
+        //Here is another if statement to address the async loading of information. 
         if (sys) {
+            //The sunrise and sunset times given are in unix code and must be converted to hours and minutes to display properly.
             sunrise = (new Date(sys.sunrise*1000).getHours() +":"+ new Date(sys.sunrise*1000).getMinutes());
             sunset = (new Date(sys.sunset*1000).getHours() +":"+ new Date(sys.sunset*1000).getMinutes());
+            //The ISO country code given is changed to a string for better UI however if it's not listed in the huge obj above, shows the iso code.
             if (this.isoCountries.hasOwnProperty(sys.country)) {
                 country = this.isoCountries[sys.country];
             } else {
@@ -358,26 +361,25 @@ class WeatherDisplayComponent extends Component {
             }
             
         }                
-
-        console.log(d5);
         
         return (
             <div>
+                {/* the weather information is conditionally rendered, only showing up after the api has been called */}
               {this.props.data.name  
                 ? <Card>
                     <Card.Body>
-                        <h1>{this.props.data.name}, {country}</h1>
-                        <h2>{d0}</h2>
+                        <h1>{this.props.data.name}, {country}</h1> {/*Location and converted country iso. */}
+                        <h2>{d0}</h2> {/*Today's date*/}
                         <div className={styles.topBox}>
                             <div className={styles.today}>
                                 <div>
-                                    <img src={this.handleImages[weather[0].icon]} alt='Clear Skys'className={styles.todayImage}/>
-                                    <h2>{weather[0].discription}</h2>
+                                    <img src={this.handleImages[weather[0].icon]} alt='Clear Skys'className={styles.todayImage}/>{/*Converted image using API image code*/}
+                                    <h2>{weather[0].discription}</h2>{/*Discription from the API*/}
                                 </div>
                                 <div className={styles.todayTemp}>
                                     <h1>{Math.round(main.temp)}{this.props.unit === 'metric' 
                                         ? '°C'
-                                        : '°F'}
+                                        : '°F'}{/*The current temperature given in the proper units chosen by the user. Using the state units to determine what to display.*/}
                                     </h1>
                                     <h4>{Math.round(main.temp_min)}{this.props.unit === 'metric' 
                                         ? '°C '
@@ -390,11 +392,12 @@ class WeatherDisplayComponent extends Component {
                                 </div>
                             </div>
                                 <div className={styles.buttons}> 
-                                    <LogInComponent/>
+                                    <LogInComponent/> {/* Trip Planner button */}
                                 </div>
                             </div>
                             <hr/>
                             <div className={styles.underLine}>
+                                {/*If showDetails is true the forcast is hidden and detailed information about today render instead.*/}
                                 {this.state.showDetails === true 
                                     ?  <Table style={{width: '100%'}} striped bordered>
                                             <tbody>
@@ -418,7 +421,7 @@ class WeatherDisplayComponent extends Component {
                                                </tr>
                                                <tr>
                                                    <td>Sunrise</td>
-                                                   <td>{sunrise.length > 5 ? '0'+ sunrise : sunrise }</td>
+                                                   <td>{sunrise.length > 5 ? '0'+ sunrise : sunrise }</td>{/* If the time given is before 10, a zero is added for better readability.*/}
                                                </tr>
                                                <tr>
                                                    <td>Sunset</td>
@@ -500,7 +503,7 @@ class WeatherDisplayComponent extends Component {
                             </div>
                         </Card.Body>
                     </Card>
-                :   <span className={styles.span}>
+                :   <span className={styles.span}> {/*For more accurate results due to the way the API is used we specify instructions to the user. */}
                         <h3>Type in the country code and name of the city you wish to view. If you would like to view results in <br/> imperial units choose °F.</h3>
                     </span>}
             </div>
