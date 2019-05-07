@@ -32,7 +32,7 @@ const SearchComponent = props => (
         name="country"
         aria-label="Default"
         aria-describedby="inputGroup-sizing-default"
-        placeholder="Country Code/Country..."
+        placeholder="Country Code..."
         required
         
       />
