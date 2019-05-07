@@ -301,11 +301,11 @@ class WeatherDisplayComponent extends Component {
        '50d': Fog,
        '50n': Fog
     };
-    
+
 
     render() {
         //This is to help access each of the obj sections more quickly for cleaner inline code.
-        let main = this.props.data.main 
+        let main = this.props.data.main
         let weather = this.props.data.weather
         let sys = this.props.data.sys
         let sunrise = ''
@@ -314,7 +314,7 @@ class WeatherDisplayComponent extends Component {
         //Here is an if statement to address the async loading of information. Used it to push the icon codes to an array for later use.
         let dayIcons = []
         if(this.props.fdata && this.props.fdata.length > 0){
-            for(let i = 0; i < this.props.fdata.length; i++){                
+            for(let i = 0; i < this.props.fdata.length; i++){
               if(this.props.fdata[i].weather.length > 0){
                 dayIcons.push(this.props.fdata[i].weather[0].icon);
               }
@@ -338,8 +338,8 @@ class WeatherDisplayComponent extends Component {
         let d5 = new Date();
         d5.setDate(today.getDate()+5)
         d5 = d5.toDateString().slice(0, 3)
-        
-        
+
+
         //Here is another if statement to address the async loading of information. The temperature highs and lows from the forcast are pushed to an array.
         let dayInfo = []
         if (this.props.fdata && this.props.fdata.length > 0){
@@ -347,8 +347,8 @@ class WeatherDisplayComponent extends Component {
                 dayInfo.push(this.props.fdata[i].main.temp_max)
                 dayInfo.push(this.props.fdata[i].main.temp_min)
             }
-        }           
-        //Here is another if statement to address the async loading of information. 
+        }
+        //Here is another if statement to address the async loading of information.
         if (sys) {
             //The sunrise and sunset times given are in unix code and must be converted to hours and minutes to display properly.
             sunrise = (new Date(sys.sunrise*1000).getHours() +":"+ new Date(sys.sunrise*1000).getMinutes());
@@ -359,13 +359,14 @@ class WeatherDisplayComponent extends Component {
             } else {
                 country = sys.country;
             }
-            
-        }                
-        
+
+        }
+
+
         return (
             <div>
                 {/* the weather information is conditionally rendered, only showing up after the api has been called */}
-              {this.props.data.name  
+              {this.props.data.name
                 ? <Card>
                     <Card.Body>
                         <h1>{this.props.data.name}, {country}</h1> {/*Location and converted country iso. */}
@@ -377,40 +378,40 @@ class WeatherDisplayComponent extends Component {
                                     <h2>{weather[0].discription}</h2>{/*Discription from the API*/}
                                 </div>
                                 <div className={styles.todayTemp}>
-                                    <h1>{Math.round(main.temp)}{this.props.unit === 'metric' 
+                                    <h1>{Math.round(main.temp)}{this.props.unit === 'metric'
                                         ? '°C'
                                         : '°F'}{/*The current temperature given in the proper units chosen by the user. Using the state units to determine what to display.*/}
                                     </h1>
-                                    <h4>{Math.round(main.temp_min)}{this.props.unit === 'metric' 
+                                    <h4>{Math.round(main.temp_min)}{this.props.unit === 'metric'
                                         ? '°C '
                                         : '°F '}
-                                        {Math.round(main.temp_max)}{this.props.unit === 'metric' 
+                                        {Math.round(main.temp_max)}{this.props.unit === 'metric'
                                         ? '°C'
                                         : '°F'}
                                     </h4>
                                     <Button onClick={this.toggleDetails} size='sm' variant='info'>Details</Button>
                                 </div>
                             </div>
-                                <div className={styles.buttons}> 
-                                    <LogInComponent/> {/* Trip Planner button */}
+                                <div className={styles.buttons}>
+                                    <LogInComponent city={this.props.data.name} showButton={true} /> {/* Trip Planner button */}
                                 </div>
                             </div>
                             <hr/>
                             <div className={styles.underLine}>
                                 {/*If showDetails is true the forcast is hidden and detailed information about today render instead.*/}
-                                {this.state.showDetails === true 
+                                {this.state.showDetails === true
                                     ?  <Table style={{width: '100%'}} striped bordered>
                                             <tbody>
                                                <tr>
                                                    <td>High Temperature</td>
-                                                   <td>{Math.round(main.temp_max)}{this.props.unit === 'metric' 
+                                                   <td>{Math.round(main.temp_max)}{this.props.unit === 'metric'
                                                         ? '°C '
                                                         : '°F '}
                                                     </td>
                                                </tr>
                                                <tr>
                                                     <td>Low Temperature</td>
-                                                    <td>{Math.round(main.temp_min)}{this.props.unit === 'metric' 
+                                                    <td>{Math.round(main.temp_min)}{this.props.unit === 'metric'
                                                         ? '°C'
                                                         : '°F'}
                                                     </td>
@@ -441,35 +442,36 @@ class WeatherDisplayComponent extends Component {
                                             <div className={styles.forcastDay}>
                                                 <p>{d1}</p>
                                                 <img src={this.handleImages[dayIcons[0]]} alt='Clear Skys' className={styles.forcastImage}/>
-                                                <h3>{Math.round(dayInfo[0])}{this.props.unit === 'metric' 
+                                                <h3>{Math.round(dayInfo[0])}{this.props.unit === 'metric'
                                                         ? '°C'
                                                         : '°F'}
                                                 </h3>
-                                                <p>{Math.round(dayInfo[1])}{this.props.unit === 'metric' 
+                                                <p>{Math.round(dayInfo[1])}{this.props.unit === 'metric'
                                                         ? '°C'
                                                         : '°F'}
                                                 </p>
                                             </div>
-                                            <div className={styles.forcastDay}> 
+
+                                            <div className={styles.forcastDay}>
                                                 <p>{d2}</p>
                                                 <img src={this.handleImages[dayIcons[1]]} alt='Clear Skys' className={styles.forcastImage}/>
-                                                <h3>{Math.round(dayInfo[2])}{this.props.unit === 'metric' 
+                                                <h3>{Math.round(dayInfo[2])}{this.props.unit === 'metric'
                                                         ? '°C'
                                                         : '°F'}
                                                 </h3>
-                                                <p>{Math.round(dayInfo[3])}{this.props.unit === 'metric' 
+                                                <p>{Math.round(dayInfo[3])}{this.props.unit === 'metric'
                                                         ? '°C'
                                                         : '°F'}
                                                 </p>
                                             </div>
-                                            <div className={styles.forcastDay}> 
+                                            <div className={styles.forcastDay}>
                                                 <p>{d3}</p>
                                                 <img src={this.handleImages[dayIcons[2]]} alt='Clear Skys' className={styles.forcastImage}/>
-                                                <h3>{Math.round(dayInfo[4])}{this.props.unit === 'metric' 
+                                                <h3>{Math.round(dayInfo[4])}{this.props.unit === 'metric'
                                                         ? '°C'
                                                         : '°F'}
                                                 </h3>
-                                                <p>{Math.round(dayInfo[5])}{this.props.unit === 'metric' 
+                                                <p>{Math.round(dayInfo[5])}{this.props.unit === 'metric'
                                                         ? '°C'
                                                         : '°F'}
                                                 </p>
@@ -477,11 +479,11 @@ class WeatherDisplayComponent extends Component {
                                             <div className={styles.forcastDay}>
                                                 <p>{d4}</p>
                                                 <img src={this.handleImages[dayIcons[3]]} alt='Clear Skys' className={styles.forcastImage}/>
-                                                <h3>{Math.round(dayInfo[6])}{this.props.unit === 'metric' 
+                                                <h3>{Math.round(dayInfo[6])}{this.props.unit === 'metric'
                                                         ? '°C'
                                                         : '°F'}
                                                 </h3>
-                                                <p>{Math.round(dayInfo[7])}{this.props.unit === 'metric' 
+                                                <p>{Math.round(dayInfo[7])}{this.props.unit === 'metric'
                                                         ? '°C'
                                                         : '°F'}
                                                 </p>
@@ -489,11 +491,11 @@ class WeatherDisplayComponent extends Component {
                                             <div className={styles.forcastDay}>
                                                 <p>{d5}</p>
                                                 <img src={this.handleImages[dayIcons[4]]} alt='Clear Skys' className={styles.forcastImage}/>
-                                                <h3>{Math.round(dayInfo[8])}{this.props.unit === 'metric' 
+                                                <h3>{Math.round(dayInfo[8])}{this.props.unit === 'metric'
                                                         ? '°C'
                                                         : '°F'}
                                                 </h3>
-                                                <p>{Math.round(dayInfo[9])}{this.props.unit === 'metric' 
+                                                <p>{Math.round(dayInfo[9])}{this.props.unit === 'metric'
                                                         ? '°C'
                                                         : '°F'}
                                                 </p>
