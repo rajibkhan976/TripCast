@@ -12,13 +12,6 @@
     margin:10px;
 }
 
-/* .weatherDisplay {
-    background-color: skyblue;
-    height: 250px;
-    width: 600px;
-    padding:20px;
-} */
-
 .button {
     display:flex;
     justify-content: center;
@@ -53,4 +46,19 @@
 .listA {
     text-align:center;
     margin: 10px;
+}
+
+.loginButton {
+    width:300px;
+    margin: 20px;
+    padding: 10px;
+    font-size: 24px;
+    border: 1px solid rgb(185, 202, 212);
+    border-radius: 5px;
+    background-color: white;
+    color: #4596CC;
+}
+
+.addIcon:hover {
+    cursor:pointer;
 }
