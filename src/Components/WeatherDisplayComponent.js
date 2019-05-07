@@ -367,7 +367,7 @@ class WeatherDisplayComponent extends Component {
                                 </div>
                             </div>
                                 <div className={styles.buttons}>
-                                    <LogInComponent city={this.props.data.name}/>
+                                    <LogInComponent city={this.props.data.name} showButton={true}/>
                                 </div>
                             </div>
                             <hr/>

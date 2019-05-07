@@ -1,0 +1,56 @@
+.container {
+    display:flex;
+    justify-content: center;
+    text-align: center;
+    margin:10px;
+    padding:10px;
+}
+
+.text {
+    text-align:center;
+    padding:10px;
+    margin:10px;
+}
+
+/* .weatherDisplay {
+    background-color: skyblue;
+    height: 250px;
+    width: 600px;
+    padding:20px;
+} */
+
+.button {
+    display:flex;
+    justify-content: center;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.settingList {
+    list-style-type: none;
+    text-align:center;
+    padding:0;
+    color: black;
+    margin-top:-20px;
+}
+
+.settingsButton {
+    border: 1px solid rgb(139, 139, 139);
+    background-color:white;
+    font-size:16px;
+    padding:8px;
+    width:150px;
+    border-radius:5px;
+}
+
+.list {
+    color: black;
+    margin: 10px;
+    padding:5px;
+    font-size:25px;
+}
+
+.listA {
+    text-align:center;
+    margin: 10px;
+}

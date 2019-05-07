@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
-import WeatherDisplayComponent from '../Components/WeatherDisplayComponent';
+import LogInComponent from './LogInComponent';
 
 class TripPlannerComponent extends Component {
 
@@ -11,7 +11,8 @@ class TripPlannerComponent extends Component {
       personalEvents: [],
       error: null,
       info: false,
-      toggleInfoIndex: undefined
+      toggleInfoIndex: undefined,
+      loginStatus: localStorage.getItem('loginStatus')
     };
   }
 
@@ -96,9 +97,14 @@ class TripPlannerComponent extends Component {
 
   render () {
     let eventsList = this.state.localEvents;
-    console.log(this.state.localEvents);
+    console.log(this.state.loginStatus);
     return (
       <div className="container">
+      {(this.state.loginStatus === 'true') ?
+      <div className="row float-right">
+        <LogInComponent {...this.props} showButton={true} />
+      </div> : null
+    }
         <div className="row">
           <div className="col-6">
             <h1>Plan your activity schedule:</h1>
