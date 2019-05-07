@@ -21,6 +21,19 @@ class NavBarComponent extends Component {
     }
 
     render() {
+      /**
+      let loggedinUser = localStorage.getItem('users');
+      let loggedinUserId, loginStatus;
+      JSON.parse(loggedinUser).forEach((element) => {
+        loggedinUserId = element.email;
+        if (loggedinUserId !== undefined) {
+          localStorage.setItem('loginStatus', 'true');
+          loginStatus = localStorage.getItem('loginStatus');
+        } else {
+          localStorage.setItem('loginStatus', 'false');
+          loginStatus = localStorage.getItem('loginStatus');
+        }
+      });**/
         return (
             <div>
                 <div id="google_translate_element" className={style.google}/>
@@ -39,7 +52,7 @@ class NavBarComponent extends Component {
                     </Navbar.Collapse>
                     <button className={style.loginIconPosition} onClick={this.showDialog}><img className={style.loginIcon} src={this.icon}/></button>
                 </Navbar>
-                <LogInComponent ref={this.loginModal} showButton={false}/> 
+                <LogInComponent ref={this.loginModal} showButton={false}/>
             </div>
         )
     }
