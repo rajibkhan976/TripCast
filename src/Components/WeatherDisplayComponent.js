@@ -367,7 +367,7 @@ class WeatherDisplayComponent extends Component {
                                 </div>
                             </div>
                                 <div className={styles.buttons}> 
-                                    <LogInComponent/>
+                                    <LogInComponent showButton={true}/>
                                 </div>
                             </div>
                             <hr/>
