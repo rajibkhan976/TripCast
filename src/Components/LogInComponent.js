@@ -5,11 +5,12 @@ import Form from 'react-bootstrap/Form';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import { Redirect } from 'react-router-dom';
 
+//This class implemented the Sign up, Log in and Log out functionality
 class LogInComponent extends Component {
 
   constructor (props) {
     super (props);
-
+    //definition and assignment of states that are required for Sign up, Log in and Log out
     this.state = {users: [
       {email: 'admin@gmail.com', password: 'admin'}
     ],
@@ -19,21 +20,19 @@ class LogInComponent extends Component {
       signupStatus: 'true',
       preLogInChecker: localStorage.getItem('loginStatus')
     };
-    console.log(this.props.city);
+    //storing the login and signup status
     localStorage.setItem('loginStatus', this.state.loginStatus);
-    console.log(localStorage.getItem('loginStatus'));
     localStorage.setItem('signupStatus', this.state.signupStatus);
-    console.log(localStorage.getItem('signupStatus'));
   }
-
+  //method for handling user email input
   handleEmailInput = (e) => {
     this.userEmail = e.target.value;
   }
-
+  //method for handling user password input
   handlePasswordInput = (e) => {
     this.userPassword = e.target.value;
   }
-
+  //method that controls the login functionality
   Login = (e) => {
     let emailCredential;
     let passwordCredential;
@@ -46,27 +45,20 @@ class LogInComponent extends Component {
     if (emailCredential === true && passwordCredential === true && this.userEmail !== undefined && this.userPassword !== undefined) {
       this.setState({loginStatus: 'true', signupStatus: 'false'});
       localStorage.setItem('loginStatus', 'true');
-      console.log(localStorage.getItem('loginStatus'));
       localStorage.setItem('signupStatus', 'false');
-      console.log(localStorage.getItem('signupStatus'));
       localStorage.setItem('users', JSON.stringify([
         {email: this.userEmail, password: this.userPassword}
       ]));
       let loggedinUser = localStorage.getItem('users');
-      JSON.parse(loggedinUser).forEach((element) => {
-        console.log(element);
-      });
       alert('Login successful:)');
     } else {
       this.setState({loginStatus: 'false', signupStatus: 'false'});
       localStorage.setItem('loginStatus', 'false');
-      console.log(localStorage.getItem('loginStatus'));
       localStorage.setItem('signupStatus', 'false');
-      console.log(localStorage.getItem('signupStatus'));
       alert('Login failed! Please signup.');
     }
   }
-
+  //method that controls the signup functionality
   Signup = (e) => {
     let emailCredential;
     let passwordCredential;
@@ -81,27 +73,23 @@ class LogInComponent extends Component {
         signupStatus: 'true'
       }));
       localStorage.setItem('loginStatus', 'false');
-      console.log(localStorage.getItem('loginStatus'));
       localStorage.setItem('signupStatus', 'true');
-      console.log(localStorage.getItem('signupStatus'));
     } else {
       this.setState({loginStatus: 'false', signupStatus: 'true'});
       localStorage.setItem('loginStatus', 'false');
-      console.log(localStorage.getItem('loginStatus'));
       localStorage.setItem('signupStatus', 'true');
-      console.log(localStorage.getItem('signupStatus'));
       alert('You are already signed up.');
     }
   }
-
+  //method that control modal close button
   handleClose = (e) => {
     this.setState({ show: false });
   }
-
+  //method that controls modal show button
   handleShow = (e) => {
     this.setState({ show: true });
   }
-
+  //method that controls the logout functionality
   Logout = (e) => {
     this.setState({
       loginStatus: 'false',
@@ -117,7 +105,6 @@ class LogInComponent extends Component {
   }
 
   render () {
-    console.log(this.state.preLogInChecker);
     if (this.state.loginStatus === 'true') {
       return <Redirect to={`/planner/${this.props.city}`} />;
     }
@@ -131,7 +118,7 @@ class LogInComponent extends Component {
         }
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Signup/Login</Modal.Title>
+            <Modal.Title>Signup/Login/Logout</Modal.Title>
           </Modal.Header>
           <Modal.Body>
           {(this.state.preLogInChecker === 'true') ?

@@ -2,20 +2,26 @@ import React, { Component } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import LogInComponent from './LogInComponent';
 
+/**this class fetches the events data from PredictHQ api based on the city parameter
+received as a props from the WeatherDisplayComponent and then enables the users to
+add and remove events to their activity schedule**/
 class TripPlannerComponent extends Component {
 
   constructor (props) {
     super (props);
+    /**definition and assignment of the states needed for the fetched events and allowing
+    the users to add events to their acitivyt schedule**/
     this.state = {
       localEvents: [],
       personalEvents: [],
       error: null,
       info: false,
-      toggleInfoIndex: undefined,
+      toggleInfoIndex: [],
       loginStatus: localStorage.getItem('loginStatus')
     };
   }
-
+  /**fetches the events from PredictHQ api based on the city parameter that is received
+  from the WeatherDisplayComponent as a props and assigns to a state**/
   componentDidMount () {
     let apiToken = 'zqjuWkOi7vUEcnpOozh3wzbqqMzcl9';
     //fetch request for predicthq api
@@ -34,13 +40,16 @@ class TripPlannerComponent extends Component {
       })
     })
   )
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      this.setState({
+        error: err
+      });
+    });
   }
-
+  //method for enabling users to add events to their activity schedule
   addEvent = (addIndex, e) => {
     for (var eventIndex in this.state.localEvents) {
       if (addIndex == eventIndex) {
-        console.log(this.state.localEvents[eventIndex]);
         let addEventTitle = this.state.localEvents[eventIndex].title;
         let addEventLabel = this.state.localEvents[eventIndex].labels.toString();
         let addEventStartDate = this.state.localEvents[eventIndex].start.substring(0, this.state.localEvents[eventIndex].start.indexOf('T'));
@@ -63,9 +72,8 @@ class TripPlannerComponent extends Component {
         this.setState({localEvents: this.state.localEvents.filter((value, index) => {return (index !== addIndex)})});
       }
     }
-    console.log(this.state.personalEvents);
   }
-
+  //method for enabling users to remove events from their activity schedule
   removeEvent = (removeIndex, e) => {
     for (var activityIndex in this.state.personalEvents) {
       if (removeIndex == activityIndex) {
@@ -83,21 +91,28 @@ class TripPlannerComponent extends Component {
       }
     }
   }
-
+  //method for toggling details of the events added to the activity schedule of the user
   toggleDetails = (toggleIndex, e) => {
     for (var eventIndex in this.state.personalEvents) {
       if (toggleIndex == eventIndex) {
-        this.setState({
-          info: !this.state.info,
-          toggleInfoIndex: eventIndex
-        });
+        if (!this.state.toggleInfoIndex.includes(toggleIndex)) {
+          this.setState(prevState => ({
+            toggleInfoIndex: [...prevState.toggleInfoIndex, toggleIndex],
+            info: true
+          }));
+        } else if (this.state.toggleInfoIndex.includes(toggleIndex)) {
+          this.setState({
+            toggleInfoIndex: this.state.toggleInfoIndex.filter((value) => {return (value !== toggleIndex)})
+          });
+        } else {
+          //nothig to do
+        }
       }
     }
   }
 
   render () {
     let eventsList = this.state.localEvents;
-    console.log(this.state.loginStatus);
     return (
       <div className="container">
       {(this.state.loginStatus === 'true') ?
@@ -114,7 +129,7 @@ class TripPlannerComponent extends Component {
                return <div>
                        <li className="list-group-item" addedeventkey={addedEventIndex}>
                         <h2> {addedEvent.eventTitle}</h2> <br/>
-                        {(this.state.info && this.state.toggleInfoIndex == addedEventIndex) ?
+                        {(this.state.info && this.state.toggleInfoIndex.includes(addedEventIndex)) ?
                           <div>
                             <p>Tags: {addedEvent.eventLabel}</p>
                             <p>Start date: {addedEvent.eventStartDate}</p>
