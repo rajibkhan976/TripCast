@@ -18,9 +18,11 @@ class LogInComponent extends Component {
       show: false,
       loginStatus: 'false',
       signupStatus: 'true',
-      preLogInChecker: localStorage.getItem('loginStatus')
+      preLogInChecker: localStorage.getItem('loginStatus'),
+      signedUpUser: localStorage.getItem('users')
     };
     //storing the login and signup status
+    localStorage.setItem('users', JSON.stringify(this.state.users));
     localStorage.setItem('loginStatus', this.state.loginStatus);
     localStorage.setItem('signupStatus', this.state.signupStatus);
   }
@@ -37,19 +39,17 @@ class LogInComponent extends Component {
     let emailCredential;
     let passwordCredential;
     if (this.userEmail !== undefined && this.userPassword !== undefined) {
-      this.state.users.find((element) => {
+      JSON.parse(this.state.signedUpUser).find((element) => {
         emailCredential = (element.email === this.userEmail);
         passwordCredential = (element.password === this.userPassword);
       });
     }
     if (emailCredential === true && passwordCredential === true && this.userEmail !== undefined && this.userPassword !== undefined) {
-      this.setState({loginStatus: 'true', signupStatus: 'false'});
+      this.setState((prevState) => ({
+        loginStatus: 'true',
+        signupStatus: 'false'}));
       localStorage.setItem('loginStatus', 'true');
       localStorage.setItem('signupStatus', 'false');
-      localStorage.setItem('users', JSON.stringify([
-        {email: this.userEmail, password: this.userPassword}
-      ]));
-      let loggedinUser = localStorage.getItem('users');
       alert('Login successful:)');
     } else {
       this.setState({loginStatus: 'false', signupStatus: 'false'});
@@ -67,11 +67,21 @@ class LogInComponent extends Component {
       passwordCredential = (element.password === this.userPassword);
     })
     if (emailCredential === false && passwordCredential === false && this.userEmail !== undefined && this.userPassword !== undefined) {
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         users: [...prevState.users, {email: this.userEmail, password: this.userPassword}],
         loginStatus: 'false',
         signupStatus: 'true'
       }));
+      JSON.parse(localStorage.getItem('users')).find((element) => {
+        if (element.email !== this.userEmail && element.password !== this.userPassword) {
+          let existingUser = JSON.parse(localStorage.getItem('users'));
+          existingUser.push({email: this.userEmail, password: this.userPassword});
+          localStorage.setItem('users', JSON.stringify(existingUser));
+          this.setState((prevstate) => ({
+            signedUpUser: localStorage.getItem('users')
+          }));
+        }
+      });
       localStorage.setItem('loginStatus', 'false');
       localStorage.setItem('signupStatus', 'true');
     } else {
@@ -91,14 +101,13 @@ class LogInComponent extends Component {
   }
   //method that controls the logout functionality
   Logout = (e) => {
-    this.setState({
+    this.setState((prevState) => ({
       loginStatus: 'false',
       signupStatus: 'true',
       preLogInChecker: 'false'
-    });
+    }));
     localStorage.setItem('loginStatus', 'false');
     localStorage.setItem('signupStatus', 'true');
-    localStorage.removeItem('users');
     this.userEmail = undefined;
     this.userPassword = undefined;
     this.props.history.push(`/home`);
