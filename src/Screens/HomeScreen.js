@@ -3,7 +3,7 @@ import SearchComponent from '../Components/SearchComponent';
 import WeatherDisplayComponent from '../Components/WeatherDisplayComponent';
 import styles from '../Components/CSS/home.module.css';
 
-
+//This component screen handles the fetch and sends props to it's children
 export class HomeScreen extends Component {
   constructor() {
     super();

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import NotFound from '../Images/HTML-404-Page.gif'
-
+//This component screen renders when the page is not found.
 class PageNotFoundScreen extends Component {
     animation = NotFound;
 

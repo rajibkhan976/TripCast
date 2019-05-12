@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styles from '../Components/CSS/about.module.css';
-
+//This component screen is an "about page" that gives information about this app and staff.
 class AboutScreen extends Component {
     render() {
         return (

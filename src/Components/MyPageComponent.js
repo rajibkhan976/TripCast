@@ -10,6 +10,7 @@ import WeatherDisplayComponent from '../Components/WeatherDisplayComponent';
 import LogInComponent from '../Components/LogInComponent';
 import SearchComponent from '../Components/SearchComponent';
 
+//This component shows the profile where you have a default location
 class MyPageComponent extends Component {
     constructor(props) {
         super(props)

@@ -5,7 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import SettingsIcon from '../Images/round_perm_identity_white_24dp.png';
 
 import LogInComponent from '../Components/LogInComponent';
-
+//This is the navbar component
 class NavBarComponent extends Component {
     constructor(props)
     {

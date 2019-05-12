@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+//This component screen renders the trip planner
 class TripPlannerScreen extends Component {
     render () {
         return (
