@@ -14,16 +14,20 @@ class TripPlannerComponent extends Component {
     this.state = {
       localEvents: [],
       personalEvents: [],
-      error: null,
+      eventError: null,
       info: false,
       toggleInfoIndex: [],
-      loginStatus: localStorage.getItem('loginStatus')
+      loginStatus: localStorage.getItem('loginStatus'),
+      weatherForecast: [],
+      weatherError: null,
+      city: undefined
     };
   }
   /**fetches the events from PredictHQ api based on the city parameter that is received
   from the WeatherDisplayComponent as a props and assigns to a state**/
   componentDidMount () {
     let apiToken = 'zqjuWkOi7vUEcnpOozh3wzbqqMzcl9';
+    const apiKey = '55f970a5b61819d7f237eb1cb2be6bfd';
     //fetch request for predicthq api
     fetch(`https://api.predicthq.com/v1/events/?q=${this.props.match.params.id}&category=conferences,expos,concerts,festivals,performing-arts,sports,community
 `, {
@@ -42,7 +46,24 @@ class TripPlannerComponent extends Component {
   )
     .catch((err) => {
       this.setState({
-        error: err
+        eventError: err
+      });
+    });
+    //Weatherforecast fetch request from openweather api
+    fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${this.props.match.params.id}&APPID=${apiKey}&units=metric`)
+    .then(res => res.json())
+    .then((weather) => {
+      //console.log(weather);
+      this.setState({
+        city: weather.city.name,
+        weatherForecast: weather.list
+      });
+      console.log(weather.city.name);
+      console.log(weather.list);
+    })
+    .catch((err) => {
+      this.setState({
+        weatherError: err
       });
     });
   }
