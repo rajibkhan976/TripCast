@@ -9,7 +9,7 @@ import ToggleButton from '../../node_modules/react-bootstrap/ToggleButton';
 
 
 
-
+//This component is the search component that sends input values to it's parent "home screen"
 
 const SearchComponent = props => (
   <Form onSubmit={props.fetchWeather}>
@@ -32,7 +32,7 @@ const SearchComponent = props => (
         name="country"
         aria-label="Default"
         aria-describedby="inputGroup-sizing-default"
-        placeholder="Country Code/Country..."
+        placeholder="Country Code..."
         required
         
       />
