@@ -51,6 +51,7 @@ class LogInComponent extends Component {
       localStorage.setItem('loginStatus', 'true');
       localStorage.setItem('signupStatus', 'false');
       alert('Login successful:)');
+      this.props.history.push("/mypage");
     } else {
       this.setState({loginStatus: 'false', signupStatus: 'false'});
       localStorage.setItem('loginStatus', 'false');
@@ -84,6 +85,7 @@ class LogInComponent extends Component {
       });
       localStorage.setItem('loginStatus', 'false');
       localStorage.setItem('signupStatus', 'true');
+      alert("Signup successful!");
     } else {
       this.setState({loginStatus: 'false', signupStatus: 'true'});
       localStorage.setItem('loginStatus', 'false');
@@ -114,17 +116,14 @@ class LogInComponent extends Component {
   }
 
   render () {
-    if (this.state.loginStatus === 'true') {
+    if (this.state.loginStatus === 'true' && this.props.city !== undefined) {
       return <Redirect to={`/planner/${this.props.city}`} />;
     }
     return (
       <>
-        {this.state.showButton ?
           <Button show="primary" onClick={this.handleShow}>
           {(this.state.preLogInChecker === 'false') ? 'Trip Planner' : 'Log out'}</Button>
-        :
-          null
-        }
+
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Signup/Login/Logout</Modal.Title>

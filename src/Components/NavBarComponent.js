@@ -49,10 +49,9 @@ class NavBarComponent extends Component {
                         <NavLink className={style.navLinks} activeClassName={style.activeLink} to="/mypage">Profile</NavLink><br/>
                         <NavLink className={style.navLinks} activeClassName={style.activeLink} to="/planner">Trip Planner</NavLink><br/>
                         <NavLink className={style.navLinks} activeClassName={style.activeLink} to="/about">About</NavLink>
+                        <NavLink className={style.loginIconPosition} activeClassName={style.activeLink} to="/login"><img className={style.loginIcon} src={this.icon} alt="profile page icon"/></NavLink>
                     </Navbar.Collapse>
-                    <button className={style.loginIconPosition} onClick={this.showDialog}><img className={style.loginIcon} src={this.icon}/></button>
                 </Navbar>
-                <LogInComponent ref={this.loginModal} showButton={false}/>
             </div>
         )
     }
