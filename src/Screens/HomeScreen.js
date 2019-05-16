@@ -28,7 +28,7 @@ export class HomeScreen extends Component {
     } else if (e.target.elements.options.value === 'fahrenheit') {
       unit = 'imperial'
     }
-    
+
     if (e.target.elements.options.value) {
       this.setState({
         unit: unit
@@ -40,7 +40,7 @@ export class HomeScreen extends Component {
     )
       .then(res => res.json())
       .then(data => {
-      
+
         if (city && country) {
           this.setState({
             data: data
@@ -48,7 +48,7 @@ export class HomeScreen extends Component {
         }
       })
       .catch(error => console.error(error));
-      
+
     this.fetchForecast(city, country, apiKey, unit);
   };
 
@@ -72,7 +72,7 @@ export class HomeScreen extends Component {
           fdata: dateList,
           error: false
         });
-        
+
       })
       //Here I catch the error and assing it to true in state so I can rende error message
       .catch(error => {
@@ -87,13 +87,14 @@ export class HomeScreen extends Component {
 
   render() {
     console.log(this.state.fdata)
-    
+
     return (
       <div>
         <div className={styles.home}>
           <SearchComponent fetchWeather={this.fetchWeather}/>
           {this.state.error === true ? this.error : null}
           <WeatherDisplayComponent
+            {...this.props}
             data={this.state.data}
             fdata={this.state.fdata}
             unit={this.state.unit}

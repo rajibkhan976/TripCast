@@ -23,8 +23,8 @@ class LogInComponent extends Component {
     };
     //storing the login and signup status
     localStorage.setItem('users', JSON.stringify(this.state.users));
-    localStorage.setItem('loginStatus', this.state.loginStatus);
-    localStorage.setItem('signupStatus', this.state.signupStatus);
+    //localStorage.setItem('loginStatus', 'false');
+    //localStorage.setItem('signupStatus', 'true');
   }
   //method for handling user email input
   handleEmailInput = (e) => {
@@ -47,11 +47,11 @@ class LogInComponent extends Component {
     if (emailCredential === true && passwordCredential === true && this.userEmail !== undefined && this.userPassword !== undefined) {
       this.setState((prevState) => ({
         loginStatus: 'true',
-        signupStatus: 'false'}));
+        signupStatus: 'false'
+      }));
       localStorage.setItem('loginStatus', 'true');
       localStorage.setItem('signupStatus', 'false');
       alert('Login successful:)');
-      this.props.history.push("/mypage");
     } else {
       this.setState({loginStatus: 'false', signupStatus: 'false'});
       localStorage.setItem('loginStatus', 'false');
@@ -105,25 +105,32 @@ class LogInComponent extends Component {
   Logout = (e) => {
     this.setState((prevState) => ({
       loginStatus: 'false',
-      signupStatus: 'true',
-      preLogInChecker: 'false'
+      signupStatus: 'true'
     }));
     localStorage.setItem('loginStatus', 'false');
     localStorage.setItem('signupStatus', 'true');
     this.userEmail = undefined;
     this.userPassword = undefined;
+    this.controlRender(e);
     this.props.history.push(`/home`);
   }
-
-  render () {
+  //method for controlling render after login
+  controlRender = (e) => {
     if (this.state.loginStatus === 'true' && this.props.city !== undefined) {
       return <Redirect to={`/planner/${this.props.city}`} />;
     }
+    if (this.state.loginStatus === 'true' && this.props.city === undefined) {
+      this.props.history.push(`/mypage`);
+    }
+  }
+
+  render () {
     return (
       <>
+      {this.controlRender()}
           <Button show="primary" onClick={this.handleShow}>
-          {(this.state.preLogInChecker === 'false') ? 'Trip Planner' : 'Log out'}</Button>
-
+          {(this.state.preLogInChecker === 'false') ? 'Trip Planner' : 'Log out'}
+          </Button>
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Signup/Login/Logout</Modal.Title>
