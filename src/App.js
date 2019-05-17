@@ -21,14 +21,14 @@ class App extends Component {
         </div>
 
         <Switch>
-            <Route exact path="/" render={props => <HomeScreen {...props}/>} />
+            <Route exact path="/" component={ HomeScreen } />
             <Route exact path="/home" render={props => <HomeScreen {...props}/>} />
             <Route exact path="/about" component={ AboutScreen } />
             <Route exact path="/mypage" render={props => <MyPageScreen {...props}/>} />
             <Route exact path="/planner" component={ TripPlannerScreen } />
             <Route exact path="/planner/:id" render={props => <TripPlannerComponent {...props}/>} />
-            <Route exact path="/login" 
-            render={props => <LogInComponent {...props}/>} 
+            <Route exact path="/login"
+            render={props => <LogInComponent {...props}/>}
             />
             <Route component={ PageNotFoundScreen } />
         </Switch>

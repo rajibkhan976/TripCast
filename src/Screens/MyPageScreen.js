@@ -23,7 +23,7 @@ class MyPageScreen extends Component {
             : null
           }
             <div>
-              <MyPageComponent />
+              <MyPageComponent {...this.props} />
             </div>
           </div>
         )

@@ -48,19 +48,19 @@ class MyPageComponent extends Component {
         } else if (e.target.elements.options.value === 'fahrenheit') {
           unit = 'imperial'
         }
-        
+
         if (e.target.elements.options.value) {
           this.setState({
             unit: unit
           })
         }
-    
+
         fetch(
           `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&APPID=${apiKey}&units=${unit}`
         )
           .then(res => res.json())
           .then(data => {
-          
+
             if (city && country) {
               this.setState({
                 data: data
@@ -68,10 +68,10 @@ class MyPageComponent extends Component {
             }
           })
           .catch(error => console.error(error));
-          
+
         this.fetchForecast(city, country, apiKey, unit);
     };
-    
+
     // FETCH method from Home Screen, fetches the upcoming weather
     fetchForecast = (city, country, apiKey, unit) => {
         fetch(
@@ -92,7 +92,7 @@ class MyPageComponent extends Component {
               fdata: dateList,
               error: false
             });
-            
+
           })
           //Here I catch the error and assing it to true in state so I can rende error message
           .catch(error => {
@@ -137,6 +137,7 @@ class MyPageComponent extends Component {
                         <h2>The weather at your chosen location is...</h2><br/>
                         <div className={myPageStyle.container}>
                           <WeatherDisplayComponent
+                          {...this.props}
                           data={this.state.data}
                           fdata={this.state.fdata}
                           unit={this.state.unit}
@@ -147,7 +148,7 @@ class MyPageComponent extends Component {
                           ?
                           <div>
                             <SearchComponent fetchWeather={this.fetchWeather}/>
-                            <h3 onClick={this.toggleSearch} className={myPageStyle.addIcon}>I'm happy with my change of location <img src={this.remove} alt="an icon with a minus sign"/></h3>
+                            <h3 onClick={this.toggleSearch} className={myPageStyle.addIcon}>I am happy with my change of location <img src={this.remove} alt="an icon with a minus sign"/></h3>
                           </div>
                           :
                           <div onClick={this.toggleSearch} className={myPageStyle.addIcon}>
@@ -177,11 +178,11 @@ class MyPageComponent extends Component {
                 </div>
                 :
                 <div className={myPageStyle.text}>
-                    <h1>You're not logged in.</h1>
+                    <h1>You are not logged in.</h1>
                     <Link to="/login">
                       <button className={myPageStyle.loginButton}>Please login</button>
                     </Link>
-                </div> 
+                </div>
                 }
             </div>
         )

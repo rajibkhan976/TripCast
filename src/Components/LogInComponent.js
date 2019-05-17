@@ -22,8 +22,6 @@ class LogInComponent extends Component {
     };
     //storing the login and signup status
     localStorage.setItem('users', JSON.stringify(this.state.users));
-    //localStorage.setItem('loginStatus', 'false');
-    //localStorage.setItem('signupStatus', 'true');
   }
 
   //method for handling user email input
@@ -93,7 +91,7 @@ class LogInComponent extends Component {
       this.setState({loginStatus: 'false', signupStatus: 'true'});
       localStorage.setItem('loginStatus', 'false');
       localStorage.setItem('signupStatus', 'true');
-      alert('You are already signed up.');
+      alert('Either you are already signed up or you did not properly fill up your credentials!');
     }
   }
 
@@ -117,10 +115,9 @@ class LogInComponent extends Component {
     localStorage.setItem('signupStatus', 'true');
     this.userEmail = undefined;
     this.userPassword = undefined;
-    this.controlRender(e);
     this.props.history.push(`/home`);
   }
-  
+
   //method for controlling render after login
   controlRender = (e) => {
     if (this.state.loginStatus === 'true' && this.props.city !== undefined) {
