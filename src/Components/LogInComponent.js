@@ -14,7 +14,6 @@ class LogInComponent extends Component {
     this.state = {users: [
       {email: 'admin@gmail.com', password: 'admin'}
     ],
-      showButton: this.props.showButton,
       show: false,
       loginStatus: 'false',
       signupStatus: 'true',
@@ -26,14 +25,17 @@ class LogInComponent extends Component {
     //localStorage.setItem('loginStatus', 'false');
     //localStorage.setItem('signupStatus', 'true');
   }
+
   //method for handling user email input
   handleEmailInput = (e) => {
     this.userEmail = e.target.value;
   }
+
   //method for handling user password input
   handlePasswordInput = (e) => {
     this.userPassword = e.target.value;
   }
+
   //method that controls the login functionality
   Login = (e) => {
     let emailCredential;
@@ -59,6 +61,7 @@ class LogInComponent extends Component {
       alert('Login failed! Please signup.');
     }
   }
+
   //method that controls the signup functionality
   Signup = (e) => {
     let emailCredential;
@@ -93,14 +96,17 @@ class LogInComponent extends Component {
       alert('You are already signed up.');
     }
   }
+
   //method that control modal close button
   handleClose = (e) => {
     this.setState({ show: false });
   }
+
   //method that controls modal show button
   handleShow = (e) => {
     this.setState({ show: true });
   }
+
   //method that controls the logout functionality
   Logout = (e) => {
     this.setState((prevState) => ({
@@ -114,6 +120,7 @@ class LogInComponent extends Component {
     this.controlRender(e);
     this.props.history.push(`/home`);
   }
+  
   //method for controlling render after login
   controlRender = (e) => {
     if (this.state.loginStatus === 'true' && this.props.city !== undefined) {
@@ -128,8 +135,8 @@ class LogInComponent extends Component {
     return (
       <>
       {this.controlRender()}
-          <Button show="primary" onClick={this.handleShow}>
-          {(this.state.preLogInChecker === 'false') ? 'Trip Planner' : 'Log out'}
+          <Button show="primary" onClick={this.handleShow} style={{display:"block", marginLeft:"auto", marginRight:"auto", marginTop:"10px"}}>
+          {(this.state.preLogInChecker === 'false') ? 'Login' : 'Logout'}
           </Button>
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>

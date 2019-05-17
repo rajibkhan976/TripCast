@@ -86,8 +86,6 @@ export class HomeScreen extends Component {
   };
 
   render() {
-    console.log(this.state.fdata)
-
     return (
       <div>
         <div className={styles.home}>

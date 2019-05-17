@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
@@ -393,7 +394,8 @@ class WeatherDisplayComponent extends Component {
                                 </div>
                             </div>
                                 <div className={styles.buttons}>
-                                    <LogInComponent city={this.props.data.name} showButton={true} /> {/* Trip Planner button */}
+                                    <h5>Add this city to your <br/>Trip Planner</h5>
+                                    <LogInComponent city={this.props.data.name}/> {/* Trip Planner button */}
                                 </div>
                             </div>
                             <hr/>

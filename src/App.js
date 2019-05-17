@@ -27,7 +27,9 @@ class App extends Component {
             <Route exact path="/mypage" render={props => <MyPageScreen {...props}/>} />
             <Route exact path="/planner" component={ TripPlannerScreen } />
             <Route exact path="/planner/:id" render={props => <TripPlannerComponent {...props}/>} />
-            <Route exact path="/login" render={props => <LogInComponent {...props}/>} />
+            <Route exact path="/login" 
+            render={props => <LogInComponent {...props}/>} 
+            />
             <Route component={ PageNotFoundScreen } />
         </Switch>
       </Router>

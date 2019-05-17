@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import MyPageComponent from '../Components/MyPageComponent';
 import LogInComponent from '../Components/LogInComponent';
+
 //Screen that renders profile
 class MyPageScreen extends Component {
 
@@ -16,12 +17,12 @@ class MyPageScreen extends Component {
         return (
           <div className="container">
           {(this.state.loginStatus === 'true') ?
-            <div className="row float-right">
+            <div style={{textAlign:"right"}}>
               <LogInComponent {...this.props} showButton={true} />
             </div>
             : null
           }
-            <div className="row">
+            <div>
               <MyPageComponent />
             </div>
           </div>

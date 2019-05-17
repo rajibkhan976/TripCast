@@ -23,6 +23,7 @@ class TripPlannerComponent extends Component {
       city: undefined
     };
   }
+
   /**fetches the events from PredictHQ api based on the city parameter that is received
   from the WeatherDisplayComponent as a props and assigns to a state**/
   componentDidMount () {
@@ -58,8 +59,8 @@ class TripPlannerComponent extends Component {
         city: weather.city.name,
         weatherForecast: weather.list
       });
-      console.log(weather.city.name);
-      console.log(weather.list);
+      // console.log(weather.city.name);
+      // console.log(weather.list);
     })
     .catch((err) => {
       this.setState({
@@ -67,6 +68,7 @@ class TripPlannerComponent extends Component {
       });
     });
   }
+
   //method for enabling users to add events to their activity schedule
   addEvent = (addIndex, e) => {
     for (var eventIndex in this.state.localEvents) {
@@ -94,6 +96,7 @@ class TripPlannerComponent extends Component {
       }
     }
   }
+
   //method for enabling users to remove events from their activity schedule
   removeEvent = (removeIndex, e) => {
     for (var activityIndex in this.state.personalEvents) {
@@ -112,6 +115,7 @@ class TripPlannerComponent extends Component {
       }
     }
   }
+
   //method for toggling details of the events added to the activity schedule of the user
   toggleDetails = (toggleIndex, e) => {
     for (var eventIndex in this.state.personalEvents) {
@@ -138,7 +142,7 @@ class TripPlannerComponent extends Component {
       <div className="container">
       {(this.state.loginStatus === 'true') ?
       <div className="row float-right">
-        <LogInComponent {...this.props} showButton={true} />
+        <LogInComponent {...this.props} />
       </div> : null
     }
         <div className="row">

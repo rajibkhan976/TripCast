@@ -48,9 +48,13 @@
 }
 .buttons {
     display: flex;
-    padding-left: 20px;
+    flex-direction: column;
+    width: 200px;
+    /* padding-left: 20px; */
     align-items: center;
+    text-align: center;
 }
+
 .span {
     text-align: center;
 }
