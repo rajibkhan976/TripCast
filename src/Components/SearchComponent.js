@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
+
 import Button from '../../node_modules/react-bootstrap/Button';
 import InputGroup from '../../node_modules/react-bootstrap/InputGroup';
 import FormControl from '../../node_modules/react-bootstrap/FormControl';
@@ -10,7 +11,6 @@ import ToggleButton from '../../node_modules/react-bootstrap/ToggleButton';
 
 
 //This component is the search component that sends input values to it's parent "home screen"
-
 const SearchComponent = props => (
   <Form onSubmit={props.fetchWeather}>
     <InputGroup className="mb-3">

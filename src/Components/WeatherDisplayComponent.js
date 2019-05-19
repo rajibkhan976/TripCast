@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import LogInComponent from './LogInComponent';
-import styles from './CSS/WeatherDisplay.module.css'
+import styles from './CSS/WeatherDisplay.module.css';
 
 import ClearSkyDay from '../Images/ClearSkyDay.svg';
 import ClearSkyNight from '../Images/ClearSkyNight.svg';
@@ -21,7 +22,8 @@ class WeatherDisplayComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showDetails: false
+            showDetails: false,
+            loginStatus: localStorage.getItem('loginStatus')
         }
     };
     //This function toggles the showDetails state when the button is clicked.
@@ -32,6 +34,12 @@ class WeatherDisplayComponent extends Component {
             showDetails: false
         });
     };
+    //method for controlling render after login
+    controlRender = (e) => {
+      if (this.state.loginStatus === 'true' && this.props.data.name !== undefined) {
+        this.props.history.push(`/planner/${this.props.data.name}`);
+      }
+    }
     //Best to keep this minimized. It takes the ISO country code as a key and assigns it a string for nicer display.
     isoCountries = {
         'AF' : 'Afghanistan',
@@ -393,7 +401,12 @@ class WeatherDisplayComponent extends Component {
                                 </div>
                             </div>
                                 <div className={styles.buttons}>
-                                    <LogInComponent city={this.props.data.name} showButton={true} /> {/* Trip Planner button */}
+                                    <h5>Add this city to your <br/>Trip Planner</h5>
+                                    {(this.state.loginStatus === 'true') ?
+                                    <Button onClick={this.controlRender} variant='primary'>Trip Planner</Button>
+                                    :
+                                    <LogInComponent {...this.props} city={this.props.data.name}/>
+                                    }
                                 </div>
                             </div>
                             <hr/>

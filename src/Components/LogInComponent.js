@@ -14,42 +14,43 @@ class LogInComponent extends Component {
     this.state = {users: [
       {email: 'admin@gmail.com', password: 'admin'}
     ],
-      showButton: this.props.showButton,
       show: false,
       loginStatus: 'false',
       signupStatus: 'true',
-      preLogInChecker: localStorage.getItem('loginStatus')
+      preLogInChecker: localStorage.getItem('loginStatus'),
+      signedUpUser: localStorage.getItem('users')
     };
     //storing the login and signup status
-    localStorage.setItem('loginStatus', this.state.loginStatus);
-    localStorage.setItem('signupStatus', this.state.signupStatus);
+    localStorage.setItem('users', JSON.stringify(this.state.users));
   }
+
   //method for handling user email input
   handleEmailInput = (e) => {
     this.userEmail = e.target.value;
   }
+
   //method for handling user password input
   handlePasswordInput = (e) => {
     this.userPassword = e.target.value;
   }
+
   //method that controls the login functionality
   Login = (e) => {
     let emailCredential;
     let passwordCredential;
     if (this.userEmail !== undefined && this.userPassword !== undefined) {
-      this.state.users.find((element) => {
+      JSON.parse(this.state.signedUpUser).find((element) => {
         emailCredential = (element.email === this.userEmail);
         passwordCredential = (element.password === this.userPassword);
       });
     }
     if (emailCredential === true && passwordCredential === true && this.userEmail !== undefined && this.userPassword !== undefined) {
-      this.setState({loginStatus: 'true', signupStatus: 'false'});
+      this.setState((prevState) => ({
+        loginStatus: 'true',
+        signupStatus: 'false'
+      }));
       localStorage.setItem('loginStatus', 'true');
       localStorage.setItem('signupStatus', 'false');
-      localStorage.setItem('users', JSON.stringify([
-        {email: this.userEmail, password: this.userPassword}
-      ]));
-      let loggedinUser = localStorage.getItem('users');
       alert('Login successful:)');
     } else {
       this.setState({loginStatus: 'false', signupStatus: 'false'});
@@ -58,6 +59,7 @@ class LogInComponent extends Component {
       alert('Login failed! Please signup.');
     }
   }
+
   //method that controls the signup functionality
   Signup = (e) => {
     let emailCredential;
@@ -67,55 +69,72 @@ class LogInComponent extends Component {
       passwordCredential = (element.password === this.userPassword);
     })
     if (emailCredential === false && passwordCredential === false && this.userEmail !== undefined && this.userPassword !== undefined) {
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         users: [...prevState.users, {email: this.userEmail, password: this.userPassword}],
         loginStatus: 'false',
         signupStatus: 'true'
       }));
+      JSON.parse(localStorage.getItem('users')).find((element) => {
+        if (element.email !== this.userEmail && element.password !== this.userPassword) {
+          let existingUser = JSON.parse(localStorage.getItem('users'));
+          existingUser.push({email: this.userEmail, password: this.userPassword});
+          localStorage.setItem('users', JSON.stringify(existingUser));
+          this.setState((prevstate) => ({
+            signedUpUser: localStorage.getItem('users')
+          }));
+        }
+      });
       localStorage.setItem('loginStatus', 'false');
       localStorage.setItem('signupStatus', 'true');
+      alert("Signup successful!");
     } else {
       this.setState({loginStatus: 'false', signupStatus: 'true'});
       localStorage.setItem('loginStatus', 'false');
       localStorage.setItem('signupStatus', 'true');
-      alert('You are already signed up.');
+      alert('Either you are already signed up or you did not properly fill up your credentials!');
     }
   }
+
   //method that control modal close button
   handleClose = (e) => {
     this.setState({ show: false });
   }
+
   //method that controls modal show button
   handleShow = (e) => {
     this.setState({ show: true });
   }
+
   //method that controls the logout functionality
   Logout = (e) => {
-    this.setState({
+    this.setState((prevState) => ({
       loginStatus: 'false',
-      signupStatus: 'true',
-      preLogInChecker: 'false'
-    });
+      signupStatus: 'true'
+    }));
     localStorage.setItem('loginStatus', 'false');
     localStorage.setItem('signupStatus', 'true');
-    localStorage.removeItem('users');
     this.userEmail = undefined;
     this.userPassword = undefined;
     this.props.history.push(`/home`);
   }
 
-  render () {
-    if (this.state.loginStatus === 'true') {
+  //method for controlling render after login
+  controlRender = (e) => {
+    if (this.state.loginStatus === 'true' && this.props.city !== undefined) {
       return <Redirect to={`/planner/${this.props.city}`} />;
     }
+    if (this.state.loginStatus === 'true' && this.props.city === undefined) {
+      this.props.history.push(`/mypage`);
+    }
+  }
+
+  render () {
     return (
       <>
-        {this.state.showButton ?
-          <Button show="primary" onClick={this.handleShow}>
-          {(this.state.preLogInChecker === 'false') ? 'Trip Planner' : 'Log out'}</Button>
-        :
-          null
-        }
+      {this.controlRender()}
+          <Button show="primary" onClick={this.handleShow} style={{display:"block", marginLeft:"auto", marginRight:"auto", marginTop:"10px"}}>
+          {(this.state.preLogInChecker === 'false') ? 'Login' : 'Logout'}
+          </Button>
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Signup/Login/Logout</Modal.Title>

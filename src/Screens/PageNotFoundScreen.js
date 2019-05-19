@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import NotFound from '../Images/HTML-404-Page.gif'
+import NotFound from '../Images/HTML-404-Page.gif';
+
 //This component screen renders when the page is not found.
 class PageNotFoundScreen extends Component {
     animation = NotFound;
@@ -8,7 +9,10 @@ class PageNotFoundScreen extends Component {
     render() {
         return(
             <div style={{backgroundColor: '#4596CC', textAlign:'center'}}>
-                <img style={{width: '55%', borderRadius:'10px', paddingBottom:'42px'}} src={this.animation} />
+                <img 
+                style={{width: '55%', borderRadius:'10px', paddingBottom:'42px'}} 
+                src={this.animation}
+                alt="an animation that shows 404 - Page Not Found"/>
             </div>
         )
     }

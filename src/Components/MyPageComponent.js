@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import Dropdown from 'react-bootstrap/Dropdown';
+import { Link } from 'react-router-dom';
 
+import Dropdown from 'react-bootstrap/Dropdown';
 import myPageStyle from './CSS/mypage.module.css';
 import addIcon from '../Images/baseline_add_black_24dp.png';
 import removeIcon from '../Images/baseline_remove_black_24dp.png';
 
 import WeatherAPI from '../API';
 import WeatherDisplayComponent from '../Components/WeatherDisplayComponent';
-import LogInComponent from '../Components/LogInComponent';
 import SearchComponent from '../Components/SearchComponent';
 
 //This component shows the profile where you have a default location
@@ -21,8 +21,6 @@ class MyPageComponent extends Component {
             unit: '',
             toggleSearch: true,
         }
-        this.loginModal = React.createRef();
-
         //This is needed for the whole location to actually show without the text from the Home page
         const weather = new WeatherAPI();
         weather.fetchWeather('SE', 'Stockholm', this.setWeather);
@@ -50,19 +48,19 @@ class MyPageComponent extends Component {
         } else if (e.target.elements.options.value === 'fahrenheit') {
           unit = 'imperial'
         }
-        
+
         if (e.target.elements.options.value) {
           this.setState({
             unit: unit
           })
         }
-    
+
         fetch(
           `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&APPID=${apiKey}&units=${unit}`
         )
           .then(res => res.json())
           .then(data => {
-          
+
             if (city && country) {
               this.setState({
                 data: data
@@ -70,10 +68,10 @@ class MyPageComponent extends Component {
             }
           })
           .catch(error => console.error(error));
-          
+
         this.fetchForecast(city, country, apiKey, unit);
     };
-    
+
     // FETCH method from Home Screen, fetches the upcoming weather
     fetchForecast = (city, country, apiKey, unit) => {
         fetch(
@@ -94,7 +92,7 @@ class MyPageComponent extends Component {
               fdata: dateList,
               error: false
             });
-            
+
           })
           //Here I catch the error and assing it to true in state so I can rende error message
           .catch(error => {
@@ -130,8 +128,8 @@ class MyPageComponent extends Component {
 
     render () {
         return (
-            <div>
-                {(this.state.loggedIn === 'false')
+            <div className={myPageStyle.container}>
+                {(this.state.loggedIn === 'true')
                 ?
                 <div>
                     <div className={myPageStyle.text}>
@@ -139,10 +137,10 @@ class MyPageComponent extends Component {
                         <h2>The weather at your chosen location is...</h2><br/>
                         <div className={myPageStyle.container}>
                           <WeatherDisplayComponent
+                          {...this.props}
                           data={this.state.data}
                           fdata={this.state.fdata}
                           unit={this.state.unit}
-                          showInfo={false}
                           />
                         </div>
                         <div>
@@ -150,11 +148,11 @@ class MyPageComponent extends Component {
                           ?
                           <div>
                             <SearchComponent fetchWeather={this.fetchWeather}/>
-                            <h3 onClick={this.toggleSearch} className={myPageStyle.addIcon}>I'm happy with my change of location <img src={this.remove}/></h3>
+                            <h3 onClick={this.toggleSearch} className={myPageStyle.addIcon}>I am happy with my change of location <img src={this.remove} alt="an icon with a minus sign"/></h3>
                           </div>
                           :
                           <div onClick={this.toggleSearch} className={myPageStyle.addIcon}>
-                            <h3>Change default location <img src={this.add}/></h3>
+                            <h3>Change default location <img src={this.add} alt="an icon with a plus sign"/></h3>
                           </div>
                           }
                       </div>
@@ -180,11 +178,12 @@ class MyPageComponent extends Component {
                 </div>
                 :
                 <div className={myPageStyle.text}>
-                    <h1>You're not logged in.</h1>
-                    <button className={myPageStyle.loginButton} onClick={this.showLogin}>Please login</button>
-                </div> 
+                    <h1>You are not logged in.</h1>
+                    <Link to="/login">
+                      <button className={myPageStyle.loginButton}>Please login</button>
+                    </Link>
+                </div>
                 }
-                <LogInComponent ref={this.loginModal} showButton={false}/>
             </div>
         )
     }

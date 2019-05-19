@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ListGroup from 'react-bootstrap/ListGroup';
 import LogInComponent from './LogInComponent';
 
 /**this class fetches the events data from PredictHQ api based on the city parameter
@@ -14,16 +13,21 @@ class TripPlannerComponent extends Component {
     this.state = {
       localEvents: [],
       personalEvents: [],
-      error: null,
+      eventError: null,
       info: false,
       toggleInfoIndex: [],
-      loginStatus: localStorage.getItem('loginStatus')
+      loginStatus: localStorage.getItem('loginStatus'),
+      weatherForecast: [],
+      weatherError: null,
+      city: undefined
     };
   }
+
   /**fetches the events from PredictHQ api based on the city parameter that is received
   from the WeatherDisplayComponent as a props and assigns to a state**/
   componentDidMount () {
     let apiToken = 'zqjuWkOi7vUEcnpOozh3wzbqqMzcl9';
+    const apiKey = '55f970a5b61819d7f237eb1cb2be6bfd';
     //fetch request for predicthq api
     fetch(`https://api.predicthq.com/v1/events/?q=${this.props.match.params.id}&category=conferences,expos,concerts,festivals,performing-arts,sports,community
 `, {
@@ -42,10 +46,25 @@ class TripPlannerComponent extends Component {
   )
     .catch((err) => {
       this.setState({
-        error: err
+        eventError: err
+      });
+    });
+    //Weatherforecast fetch request from openweather api
+    fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${this.props.match.params.id}&APPID=${apiKey}&units=metric`)
+    .then(res => res.json())
+    .then((weather) => {
+      this.setState({
+        city: weather.city.name,
+        weatherForecast: weather.list
+      });
+    })
+    .catch((err) => {
+      this.setState({
+        weatherError: err
       });
     });
   }
+
   //method for enabling users to add events to their activity schedule
   addEvent = (addIndex, e) => {
     for (var eventIndex in this.state.localEvents) {
@@ -73,6 +92,7 @@ class TripPlannerComponent extends Component {
       }
     }
   }
+
   //method for enabling users to remove events from their activity schedule
   removeEvent = (removeIndex, e) => {
     for (var activityIndex in this.state.personalEvents) {
@@ -91,6 +111,7 @@ class TripPlannerComponent extends Component {
       }
     }
   }
+
   //method for toggling details of the events added to the activity schedule of the user
   toggleDetails = (toggleIndex, e) => {
     for (var eventIndex in this.state.personalEvents) {
@@ -117,7 +138,7 @@ class TripPlannerComponent extends Component {
       <div className="container">
       {(this.state.loginStatus === 'true') ?
       <div className="row float-right">
-        <LogInComponent {...this.props} showButton={true} />
+        <LogInComponent {...this.props} />
       </div> : null
     }
         <div className="row">
@@ -126,7 +147,7 @@ class TripPlannerComponent extends Component {
           {(this.state.personalEvents.length != 0) ?
             <ul className="list-group">
              {this.state.personalEvents.map((addedEvent, addedEventIndex) => {
-               return <div>
+               return <div key={addedEventIndex}>
                        <li className="list-group-item" addedeventkey={addedEventIndex}>
                         <h2> {addedEvent.eventTitle}</h2> <br/>
                         {(this.state.info && this.state.toggleInfoIndex.includes(addedEventIndex)) ?
@@ -149,8 +170,8 @@ class TripPlannerComponent extends Component {
             <h1>Events within {this.props.match.params.id}:</h1>
             <ul className="list-group">
               {eventsList.map((event, index) => {
-                return <div>
-                         <li className="list-group-item" key={index}>
+                return <div key={index}>
+                         <li className="list-group-item">
                            <h2>{event.title}</h2> <br/>
                            <p>Tags: {event.labels.toString()}</p>
                            <p>Start date: {event.start.substring(0, event.start.indexOf('T'))}</p>
