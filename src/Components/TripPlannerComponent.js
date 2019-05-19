@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ListGroup from 'react-bootstrap/ListGroup';
 import LogInComponent from './LogInComponent';
 
 /**this class fetches the events data from PredictHQ api based on the city parameter
@@ -54,13 +53,10 @@ class TripPlannerComponent extends Component {
     fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${this.props.match.params.id}&APPID=${apiKey}&units=metric`)
     .then(res => res.json())
     .then((weather) => {
-      //console.log(weather);
       this.setState({
         city: weather.city.name,
         weatherForecast: weather.list
       });
-      // console.log(weather.city.name);
-      // console.log(weather.list);
     })
     .catch((err) => {
       this.setState({
@@ -151,7 +147,7 @@ class TripPlannerComponent extends Component {
           {(this.state.personalEvents.length != 0) ?
             <ul className="list-group">
              {this.state.personalEvents.map((addedEvent, addedEventIndex) => {
-               return <div>
+               return <div key={addedEventIndex}>
                        <li className="list-group-item" addedeventkey={addedEventIndex}>
                         <h2> {addedEvent.eventTitle}</h2> <br/>
                         {(this.state.info && this.state.toggleInfoIndex.includes(addedEventIndex)) ?
@@ -174,8 +170,8 @@ class TripPlannerComponent extends Component {
             <h1>Events within {this.props.match.params.id}:</h1>
             <ul className="list-group">
               {eventsList.map((event, index) => {
-                return <div>
-                         <li className="list-group-item" key={index}>
+                return <div key={index}>
+                         <li className="list-group-item">
                            <h2>{event.title}</h2> <br/>
                            <p>Tags: {event.labels.toString()}</p>
                            <p>Start date: {event.start.substring(0, event.start.indexOf('T'))}</p>

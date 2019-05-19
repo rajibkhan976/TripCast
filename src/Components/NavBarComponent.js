@@ -7,10 +7,6 @@ import SettingsIcon from '../Images/round_perm_identity_white_24dp.png';
 
 //This is the navbar component
 class NavBarComponent extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     icon = SettingsIcon;
 
     render() {

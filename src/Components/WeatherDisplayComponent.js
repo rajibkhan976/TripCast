@@ -5,7 +5,6 @@ import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import LogInComponent from './LogInComponent';
 import styles from './CSS/WeatherDisplay.module.css';
-import { Redirect } from 'react-router-dom';
 
 import ClearSkyDay from '../Images/ClearSkyDay.svg';
 import ClearSkyNight from '../Images/ClearSkyNight.svg';
